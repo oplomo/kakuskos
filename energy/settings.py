@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-d^rj2v%$tvsd#3&8lsws27ksou-79m!dzpbx*k9l!%0rubxs#(
 DEBUG = True
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['kakuskos.onrender.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ["kakuskos.onrender.com", "127.0.0.1", "localhost"]
 
 
 # Application definition
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -134,6 +135,3 @@ MEDIA_ROOT = BASE_DIR / "media"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-
-
