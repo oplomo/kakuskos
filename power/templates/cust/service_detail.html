@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ service.title }}{% endblock %}
+
+{% block content %}
+<article>
+    <h1>{{ service.title }}</h1>
+    <p>{{ service.description }}</p>
+    
+    <h2>What Makes Our {{ service.title }} Unique</h2>
+    <p>{{ service.value_proposition }}</p>
+    
+    {% if case_studies %}
+    <h2>Related Case Studies</h2>
+    <ul>
+        {% for case in case_studies %}
+        <li>
+            <a href="{% url 'case_study_detail' case.id %}">
+                {{ case.title }} - {{ case.location }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</article>
+{% endblock %}

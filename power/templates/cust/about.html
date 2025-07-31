@@ -1,0 +1,321 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}About Us | Kakuskos Consulting{% endblock %}
+
+{% block content %}
+<main class="about-page ">
+
+    <div class="about-header">
+        <h1 class="about-title">About Kakuskos Consulting</h1>
+        <p class="about-tagline">Lighting the path to smart, sustainable energy—one client at a time.</p>
+    </div>
+
+    <section class="section who-we-are">
+        <h2 class="section-heading">Who We Are</h2>
+        <p class="section-paragraph">
+            Kakuskos Consulting is a Kenyan-based energy solutions company founded with a bold vision: to empower people and organizations to harness solar energy not just as an alternative, but as a smarter, cleaner, and more sustainable way of life. 
+            Our foundation lies in data, people, and trust. We're not installers—we're advisors, designers, and partners in your energy journey.
+        </p>
+    </section>
+
+    <section class="section mission-values">
+        <h2 class="section-heading">Our Mission & Values</h2>
+        <p class="section-paragraph">
+            Our mission is to make sustainable energy accessible, practical, and valuable for everyone—from single households to complex industrial operations. 
+            We believe in doing things the right way: using data, considering long-term impact, and aligning with global ESG principles.
+        </p>
+        <ul class="value-list">
+            <li class="value-item">🌞 Integrity in energy guidance</li>
+            <li class="value-item">📊 Data-backed decisions</li>
+            <li class="value-item">🌍 Environmental responsibility</li>
+            <li class="value-item">🤝 Long-term client empowerment</li>
+            <li class="value-item">🚀 Innovation with a human touch</li>
+        </ul>
+        <div class="sun-illustration">
+            <img src="{% static 'power/images/sun.jpg' %}" alt="Solar energy illustration" class="about-image sun-image">
+        </div>
+    </section>
+
+    <section class="section services-summary">
+        <h2 class="section-heading">What We Do</h2>
+        <p class="section-paragraph">
+            We specialize in delivering comprehensive solar and energy efficiency solutions—from technical audits and remote coaching to full system installations and ESG consulting. 
+            Our five signature services cover every stage of your energy transformation: analysis, planning, education, implementation, and sustainability tracking.
+        </p>
+    </section>
+
+    <section class="section our-clients">
+        <h2 class="section-heading">Who We Serve</h2>
+        <p class="section-paragraph">
+            Our clients range from forward-thinking homeowners in Nairobi and Kisumu, to commercial buildings and manufacturing facilities across Kiambu, Nakuru, and beyond. 
+            We’ve worked with families seeking freedom from unreliable power, and CEOs aiming to hit their ESG metrics. Whether you’re in a rural area or a business park—we adapt our services to your unique context.
+        </p>
+    </section>
+
+    <section class="section coverage-area">
+        <h2 class="section-heading">Our Geographic Footprint</h2>
+        <p class="section-paragraph">
+            Currently, our services are available across the entire Republic of Kenya. From urban hubs to underserved rural communities, we’ve extended reliable solar solutions where they’re needed most.
+        </p>
+        <div class="kenya-map">
+<img src="https://th.bing.com/th/id/R.5a2742ba3517af47bfacf7bc49adbbd0?rik=Z0pL%2bcWFSmWBWg&riu=http%3a%2f%2fwww.worldatlas.com%2fimg%2fareamap%2f04d43df101a657e432fa1982023e499b.gif&ehk=dhRqcWp9lu92gBGl6VlXCvunVa%2fLP9Y6MNo3DkgcSvY%3d&risl=&pid=ImgRaw&r=0" 
+     alt="Map showing Kakuskos' coverage in Kenya"
+     class="about-image kenya-image">
+        </div>
+        <p class="section-paragraph">
+            As we scale, our vision is to expand into the wider East African region—bringing the same level of integrity, data, and sustainability to Uganda, Tanzania, Rwanda, and beyond.
+        </p>
+    </section>
+
+    <section class="section team-philosophy">
+        <h2 class="section-heading">Our People & Philosophy</h2>
+        <p class="section-paragraph">
+            Kakuskos is powered by a cross-disciplinary team of engineers, sustainability experts, and passionate problem-solvers. 
+            We work collaboratively—combining global expertise with a deep understanding of the local energy landscape. 
+            We don’t just implement solutions—we teach our clients, empower them, and build lasting partnerships that grow beyond the installation.
+        </p>
+    </section>
+
+    <section class="section call-to-action">
+        <h2 class="section-heading">Join Our Energy Movement</h2>
+        <p class="section-paragraph">
+            If you're ready to reduce your power bills, gain energy independence, or lead your company toward carbon neutrality—Kakuskos is ready to walk that journey with you. 
+            Let’s build a smarter energy future for Kenya, and eventually, for all of East Africa.
+        </p>
+        <a href="{% url 'contact' %}" class="about-cta-button">Get in Touch</a>
+    </section>
+
+</main>
+
+<style>
+    /* About Page Styling */
+.about-page {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    color: white;
+    max-width: 99%;
+    margin: 0 auto;
+    padding: 2rem;
+    background: linear-gradient(to bottom, #0a192f, #1a365d);
+    margin-bottom: 3rem;
+}
+
+.about-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+    padding: 3rem 0;
+}
+
+.about-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #0a192f;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.about-tagline {
+    font-size: 1.25rem;
+    color: #4a5568;
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+/* Section Styling */
+.section {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    color:white
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.section-heading {
+    font-size: 1.75rem;
+    color: white;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.section-heading::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+}
+
+.section-paragraph {
+    margin-bottom: 1.5rem;
+    color: white;
+    font-size: 1.1rem;
+}
+
+/* Value List */
+.value-list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+}
+
+.value-item {
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.75rem;
+    border-left: 3px solid #4299e1;
+    transition: all 0.3s ease;
+}
+
+.value-item:hover {
+    transform: translateX(5px);
+}
+
+/* Images */
+.about-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    display: block;
+    margin: 2rem auto;
+}
+
+.sun-image {
+  width: 100%;
+  max-width: 600px; /* or 60vw depending on layout */
+  height: auto;
+  opacity: 0.9;
+  animation: pulse 4s infinite alternate;
+  display: block;
+  margin: 0 auto; /* centers the image horizontally */
+}
+
+.kenya-image {
+    max-width: 500px;
+    border: 1px solid #e2e8f0;
+}
+
+/* CTA Button */
+.about-cta-button {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: #2b6cb0;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.about-cta-button:hover {
+    background: #2c5282;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+
+/* Twinkling Stars Background */
+.about-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1" fill="%23CBD5E0" opacity="0.5"/><circle cx="50" cy="30" r="1" fill="%23CBD5E0" opacity="0.7"/><circle cx="80" cy="20" r="1" fill="%23CBD5E0" opacity="0.3"/><circle cx="30" cy="70" r="1" fill="%23CBD5E0" opacity="0.6"/><circle cx="70" cy="80" r="1" fill="%23CBD5E0" opacity="0.4"/></svg>');
+    opacity: 0.3;
+}
+.about-header::before{
+    animation: twinkle 5s infinite alternate;
+
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .about-page {
+        padding: 1rem;
+    }
+    
+    .about-title {
+        font-size: 2rem;
+    }
+    
+    .section {
+        padding: 1.5rem;
+    }
+    
+    .kenya-image {
+        max-width: 100%;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+.about-title, .about-tagline {
+    position: relative;
+    z-index: 10;
+    color:white
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
+</style>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Create twinkling stars
+    const starsContainer = document.getElementById('stars-container');
+    const starCount = 50;
+    
+    for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        // Random properties for each star
+        const size = Math.random() * 3 + 1;
+        const duration = Math.random() * 3 + 2;
+        const delay = Math.random() * 5;
+        const opacity = Math.random() * 0.7 + 0.3;
+        
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.setProperty('--duration', `${duration}s`);
+        star.style.animationDelay = `${delay}s`;
+        star.style.opacity = opacity;
+        
+        starsContainer.appendChild(star);
+    }
+});
+
+</script>
+
+
+{% endblock %}
+
+
+
+
+https://th.bing.com/th/id/R.5a2742ba3517af47bfacf7bc49adbbd0?rik=Z0pL%2bcWFSmWBWg&riu=http%3a%2f%2fwww.worldatlas.com%2fimg%2fareamap%2f04d43df101a657e432fa1982023e499b.gif&ehk=dhRqcWp9lu92gBGl6VlXCvunVa%2fLP9Y6MNo3DkgcSvY%3d&risl=&pid=ImgRaw&r=0

@@ -1,0 +1,410 @@
+{% extends "adbase.html" %}
+
+{% block content %}
+<div class="wealth-services-container">
+    <div class="services-header">
+        <h1><i class="fas fa-concierge-bell"></i> Premium Service Management</h1>
+        {% comment %} <a href="{% url 'add_service' %}" class="wealth-add-btn">
+            <i class="fas fa-plus-circle"></i> Add New Service
+        </a> {% endcomment %}
+    </div>
+
+    <div class="services-stats">
+        <div class="stat-card">
+            <div class="stat-icon gold">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="stat-content">
+                <h3>Total Services</h3>
+                <p class="stat-value">{{ services.count }}</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon silver">
+                <i class="fas fa-tags"></i>
+            </div>
+            <div class="stat-content">
+                <h3>Service Types</h3>
+                <p class="stat-value">{{ service_types_count }}</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon bronze">
+                <i class="fas fa-sort-amount-up"></i>
+            </div>
+            <div class="stat-content">
+                <h3>Highest Order</h3>
+                <p class="stat-value">{{ highest_order }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="wealth-table-container">
+        <table class="wealth-services-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Order</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for service in services %}
+                <tr>
+                    <td class="service-title-cell">
+                        <strong>{{ service.title }}</strong>
+                        {% if service.is_featured %}
+                        <span class="featured-badge"><i class="fas fa-crown"></i> Featured</span>
+                        {% endif %}
+                    </td>
+                    <td class="service-type-cell">
+                        <span class="type-tag type-{{ service.service_type|lower }}">
+                            {{ service.get_service_type_display }}
+                        </span>
+                    </td>
+                    <td class="order-cell">
+                        {{ service.display_order }}
+                    </td>
+                    <td class="status-cell">
+                        <span class="status-badge status-{% if service.is_active %}active{% else %}inactive{% endif %}">
+                            {% if service.is_active %}Active{% else %}Inactive{% endif %}
+                        </span>
+                    </td>
+                    <td class="actions-cell">
+                        <a href="{% url 'edit_service' service.slug %}" class="action-btn edit-btn" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        {% comment %} <a href="{% url 'toggle_service' service.slug %}" class="action-btn status-btn" title="Toggle Status">
+                            <i class="fas fa-power-off"></i>
+                        </a> {% endcomment %}
+                        {% comment %} <a href="{% url 'service_details' service.slug %}" class="action-btn view-btn" title="View">
+                            <i class="fas fa-eye"></i>
+                        </a> {% endcomment %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    /* Services Container */
+    .wealth-services-container {
+        padding: 2rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(233, 144, 41, 0.1);
+    }
+
+    /* Header Styles */
+    .services-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .services-header h1 {
+        color: #2C3E50;
+        font-size: 1.8rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin: 0;
+    }
+
+    .wealth-add-btn {
+        background: linear-gradient(135deg, #F39C12, #E67E22);
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        transition: all 0.3s ease;
+    }
+
+    .wealth-add-btn:hover {
+        background: linear-gradient(135deg, #E67E22, #F39C12);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(230, 126, 34, 0.3);
+    }
+
+    /* Stats Cards */
+    .services-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .stat-card {
+        background: white;
+        border-radius: 10px;
+        padding: 1.5rem;
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+        border-top: 4px solid;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+
+    .stat-icon.gold {
+        background: rgba(241, 196, 15, 0.1);
+        color: #F1C40F;
+        border-top-color: #F1C40F;
+    }
+
+    .stat-icon.silver {
+        background: rgba(189, 195, 199, 0.1);
+        color: #BDC3C7;
+        border-top-color: #BDC3C7;
+    }
+
+    .stat-icon.bronze {
+        background: rgba(211, 84, 0, 0.1);
+        color: #D35400;
+        border-top-color: #D35400;
+    }
+
+    .stat-content {
+        flex: 1;
+    }
+
+    .stat-content h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1rem;
+        color: #7F8C8D;
+        font-weight: 600;
+    }
+
+    .stat-value {
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #2C3E50;
+    }
+
+    /* Table Styles */
+    .wealth-table-container {
+        overflow-x: auto;
+    }
+
+    .wealth-services-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 1rem;
+    }
+
+    .wealth-services-table th {
+        background: linear-gradient(to bottom, #E74C3C, #C0392B);
+        color: white;
+        font-weight: 500;
+        padding: 1rem;
+        text-align: left;
+        position: sticky;
+        top: 0;
+    }
+
+    .wealth-services-table td {
+        padding: 1rem;
+        border-bottom: 1px solid #EDEDED;
+    }
+
+    .wealth-services-table tr:hover {
+        background-color: #FFF9F5;
+    }
+
+    /* Column Specific Styles */
+    .service-title-cell {
+        min-width: 200px;
+    }
+
+    .featured-badge {
+        background: linear-gradient(135deg, #F1C40F, #F39C12);
+        color: white;
+        font-size: 0.7rem;
+        padding: 0.2rem 0.5rem;
+        border-radius: 10px;
+        margin-left: 0.5rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .service-type-cell {
+        min-width: 120px;
+    }
+
+    .type-tag {
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        display: inline-block;
+    }
+
+    .type-installation {
+        background: rgba(52, 152, 219, 0.1);
+        color: #3498DB;
+    }
+
+    .type-maintenance {
+        background: rgba(46, 204, 113, 0.1);
+        color: #2ECC71;
+    }
+
+    .type-consultation {
+        background: rgba(155, 89, 182, 0.1);
+        color: #9B59B6;
+    }
+
+    .type-repair {
+        background: rgba(231, 76, 60, 0.1);
+        color: #E74C3C;
+    }
+
+    .order-cell {
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .status-cell {
+        white-space: nowrap;
+    }
+
+    .status-badge {
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    .status-active {
+        background: rgba(46, 204, 113, 0.1);
+        color: #27AE60;
+    }
+
+    .status-inactive {
+        background: rgba(189, 195, 199, 0.1);
+        color: #7F8C8D;
+    }
+
+    .actions-cell {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .action-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .edit-btn {
+        background: rgba(52, 152, 219, 0.1);
+        color: #3498DB;
+    }
+
+    .edit-btn:hover {
+        background: #3498DB;
+        color: white;
+    }
+
+    .status-btn {
+        background: rgba(243, 156, 18, 0.1);
+        color: #F39C12;
+    }
+
+    .status-btn:hover {
+        background: #F39C12;
+        color: white;
+    }
+
+    .view-btn {
+        background: rgba(155, 89, 182, 0.1);
+        color: #9B59B6;
+    }
+
+    .view-btn:hover {
+        background: #9B59B6;
+        color: white;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .services-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .services-stats {
+            grid-template-columns: 1fr;
+        }
+        
+        .wealth-services-table {
+            font-size: 0.9rem;
+        }
+        
+        .wealth-services-table th,
+        .wealth-services-table td {
+            padding: 0.8rem;
+        }
+        
+        .actions-cell {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Highlight featured services
+        const featuredBadges = document.querySelectorAll('.featured-badge');
+        featuredBadges.forEach(badge => {
+            badge.closest('tr').style.backgroundColor = '#FFF9E6';
+        });
+        
+        // Add click effect to action buttons
+        const actionButtons = document.querySelectorAll('.action-btn');
+        actionButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                this.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+    });
+</script>
+{% endblock %}

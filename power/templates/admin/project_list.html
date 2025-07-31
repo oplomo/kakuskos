@@ -1,0 +1,446 @@
+{% extends "adbase.html" %}
+
+{% block content %}
+<div class="wealth-projects-container">
+    <div class="projects-header">
+        <h1><i class="fas fa-solar-panel"></i> Installation Projects Portfolio</h1>
+        <a href="{% url 'add_project' %}" class="wealth-add-btn">
+            <i class="fas fa-plus-circle"></i> New Project
+        </a>
+    </div>
+
+    <div class="projects-summary-cards">
+        <div class="summary-card total-projects">
+            <div class="card-icon">
+                <i class="fas fa-project-diagram"></i>
+            </div>
+            <div class="card-content">
+                <h3>Total Projects</h3>
+                <p class="card-value">{{ total_projects }}</p>
+                <p class="card-trend {% if growth_rate >= 0 %}positive{% else %}negative{% endif %}">
+                    <i class="fas fa-arrow-{% if growth_rate >= 0 %}up{% else %}down{% endif %}"></i> 
+                    {{ growth_rate|floatformat:1 }}% growth
+                </p>
+            </div>
+        </div>
+
+        <div class="summary-card total-revenue">
+            <div class="card-icon">
+                <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <div class="card-content">
+                <h3>Total Revenue</h3>
+                <p class="card-value">ksh{{ total_revenue|floatformat:2 }}</p>
+                <p class="card-trend {% if revenue_growth >= 0 %}positive{% else %}negative{% endif %}">
+                    <i class="fas fa-arrow-{% if revenue_growth >= 0 %}up{% else %}down{% endif %}"></i> 
+                    {{ revenue_growth|floatformat:1 }}% change
+                </p>
+            </div>
+        </div>
+
+        <div class="summary-card total-profit">
+            <div class="card-icon">
+                <i class="fas fa-piggy-bank"></i>
+            </div>
+            <div class="card-content">
+                <h3>Total Profit</h3>
+                <p class="card-value">ksh{{ total_profit|floatformat:2 }}</p>
+                <p class="card-trend {% if profit_growth >= 0 %}positive{% else %}negative{% endif %}">
+                    <i class="fas fa-arrow-{% if profit_growth >= 0 %}up{% else %}down{% endif %}"></i> 
+                    {{ profit_growth|floatformat:1 }}% change
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="wealth-table-container">
+        <table class="wealth-projects-table">
+            <thead>
+                <tr>
+                    <th>Client</th>
+                    <th>Completion Date</th>
+                    <th>System Size</th>
+                    <th>Total Cost</th>
+                    <th>Profit</th>
+                    <th>Service</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                <tr>
+                    <td class="client-cell">
+                        <strong>{{ project.client_name }}</strong>
+                        {% if project.is_featured %}
+                        <span class="featured-badge"><i class="fas fa-star"></i> Featured</span>
+                        {% endif %}
+                    </td>
+                    <td class="date-cell">{{ project.completion_date|date:"M d, Y" }}</td>
+                    <td class="size-cell">{{ project.system_size_kw|floatformat:2 }} kW</td>
+                    <td class="cost-cell">ksh{{ project.total_cost|floatformat:2 }}</td>
+                    <td class="profit-cell {% if project.profit >= 0 %}positive-profit{% else %}negative-profit{% endif %}">
+                        ksh{{ project.profit|floatformat:2 }}
+                    </td>
+                    <td class="service-cell">
+                        <span class="service-tag">
+                            {{ project.service_type.title }}
+                        </span>
+                    </td>
+                    <td class="status-cell">
+                        <span class="status-badge status-completed">
+                            Completed
+                        </span>
+                    </td>
+                    <td class="actions-cell">
+                        <a href="{% url 'edit_project' project.pk %}" class="action-btn edit-btn" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="#" class="action-btn view-btn" title="View" onclick="alert('View functionality coming soon!')">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8" class="no-data">No projects found. Add your first project!</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    /* Projects Container */
+    .wealth-projects-container {
+        padding: 2rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(233, 144, 41, 0.1);
+    }
+
+    /* Header Styles */
+    .projects-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .projects-header h1 {
+        color: #2C3E50;
+        font-size: 1.8rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin: 0;
+    }
+
+    .wealth-add-btn {
+        background: linear-gradient(135deg, #F39C12, #E67E22);
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        transition: all 0.3s ease;
+    }
+
+    .wealth-add-btn:hover {
+        background: linear-gradient(135deg, #E67E22, #F39C12);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(230, 126, 34, 0.3);
+    }
+
+    /* Summary Cards */
+    .projects-summary-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .summary-card {
+        background: white;
+        border-radius: 10px;
+        padding: 1.5rem;
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+        border-top: 4px solid;
+    }
+
+    .summary-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .total-projects {
+        border-color: #3498DB;
+    }
+
+    .total-revenue {
+        border-color: #27AE60;
+    }
+
+    .total-profit {
+        border-color: #F39C12;
+    }
+
+    .card-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+
+    .total-projects .card-icon {
+        background: rgba(52, 152, 219, 0.1);
+        color: #3498DB;
+    }
+
+    .total-revenue .card-icon {
+        background: rgba(39, 174, 96, 0.1);
+        color: #27AE60;
+    }
+
+    .total-profit .card-icon {
+        background: rgba(243, 156, 18, 0.1);
+        color: #F39C12;
+    }
+
+    .card-content {
+        flex: 1;
+    }
+
+    .card-content h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1rem;
+        color: #7F8C8D;
+        font-weight: 600;
+    }
+
+    .card-value {
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #2C3E50;
+    }
+
+    .card-trend {
+        margin: 0.5rem 0 0 0;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .positive {
+        color: #27AE60;
+    }
+
+    .negative {
+        color: #E74C3C;
+    }
+
+    /* Table Styles */
+    .wealth-table-container {
+        overflow-x: auto;
+    }
+
+    .wealth-projects-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 1rem;
+    }
+
+    .wealth-projects-table th {
+        background: linear-gradient(to bottom, #E74C3C, #C0392B);
+        color: white;
+        font-weight: 500;
+        padding: 1rem;
+        text-align: left;
+        position: sticky;
+        top: 0;
+    }
+
+    .wealth-projects-table td {
+        padding: 1rem;
+        border-bottom: 1px solid #EDEDED;
+    }
+
+    .wealth-projects-table tr:hover {
+        background-color: #FFF9F5;
+    }
+
+    /* Column Specific Styles */
+    .client-cell {
+        min-width: 180px;
+    }
+
+    .featured-badge {
+        background: #F39C12;
+        color: white;
+        font-size: 0.7rem;
+        padding: 0.2rem 0.5rem;
+        border-radius: 10px;
+        margin-left: 0.5rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .date-cell {
+        white-space: nowrap;
+    }
+
+    .size-cell {
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .cost-cell, .profit-cell {
+        text-align: right;
+        font-family: 'Courier New', monospace;
+    }
+
+    .positive-profit {
+        color: #27AE60;
+        font-weight: 600;
+    }
+
+    .negative-profit {
+        color: #E74C3C;
+        font-weight: 600;
+    }
+
+    .service-cell {
+        min-width: 120px;
+    }
+
+    .service-tag {
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        display: inline-block;
+    }
+
+    .status-cell {
+        white-space: nowrap;
+    }
+
+    .status-badge {
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    .status-completed {
+        background: rgba(39, 174, 96, 0.1);
+        color: #27AE60;
+    }
+
+    .status-in-progress {
+        background: rgba(41, 128, 185, 0.1);
+        color: #2980B9;
+    }
+
+    .status-pending {
+        background: rgba(243, 156, 18, 0.1);
+        color: #F39C12;
+    }
+
+    .status-cancelled {
+        background: rgba(231, 76, 60, 0.1);
+        color: #E74C3C;
+    }
+
+    .actions-cell {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .action-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .edit-btn {
+        background: rgba(52, 152, 219, 0.1);
+        color: #3498DB;
+    }
+
+    .edit-btn:hover {
+        background: #3498DB;
+        color: white;
+    }
+
+    .view-btn {
+        background: rgba(155, 89, 182, 0.1);
+        color: #9B59B6;
+    }
+
+    .view-btn:hover {
+        background: #9B59B6;
+        color: white;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .projects-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .projects-summary-cards {
+            grid-template-columns: 1fr;
+        }
+        
+        .wealth-projects-table {
+            font-size: 0.9rem;
+        }
+        
+        .wealth-projects-table th,
+        .wealth-projects-table td {
+            padding: 0.8rem;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Highlight recent projects (completed in last 30 days)
+        const projectDates = document.querySelectorAll('.date-cell');
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        
+        projectDates.forEach(cell => {
+            const dateText = cell.textContent.trim();
+            const projectDate = new Date(dateText);
+            
+            if (projectDate > thirtyDaysAgo) {
+                cell.closest('tr').style.backgroundColor = '#FFF5E6';
+                cell.closest('tr').style.borderLeft = '3px solid #F39C12';
+            }
+        });
+    });
+</script>
+{% endblock %}

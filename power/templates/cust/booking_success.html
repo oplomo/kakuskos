@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Booking Confirmed – Kakuskos{% endblock %}
+{% block content %}
+
+
+    <div class="success-container">
+        <div class="success-icon">&#10004;</div>
+        <h1>Booking Confirmed!</h1>
+        <p>Thank you for reaching out. Our team will contact you shortly with the next steps.</p>
+        <a href="{% url 'home' %}" class="btn-go-home">Go Back to Homepage</a>
+    </div>
+
+    <canvas id="confetti-canvas"></canvas>
+    <script src="{% static 'power/confetti.js' %}"></script>
+
+
+    <style>
+        .success-body {
+    background: linear-gradient(145deg, #e0ffe4, #ffffff);
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.success-container {
+    background-color: #fff;
+    padding: 40px 50px;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(0, 128, 96, 0.15);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.success-icon {
+    font-size: 70px;
+    color: #28a745;
+    margin-bottom: 20px;
+    animation: bounce 0.6s ease;
+}
+
+.success-container h1 {
+    color: #205d38;
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.success-container p {
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+.btn-go-home {
+    background-color: #205d38;
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.btn-go-home:hover {
+    background-color: #27ae60;
+}
+
+/* Confetti canvas full screen */
+#confetti-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Bounce animation */
+@keyframes bounce {
+    0%   { transform: scale(0.3); opacity: 0.5; }
+    50%  { transform: scale(1.1); }
+    70%  { transform: scale(0.9); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+    </style>
+{% endblock content %}

@@ -1,0 +1,1247 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if messages %}
+  <div class="message-container">
+    {% for message in messages %}
+      <div class="alert {{ message.tags }}">
+        <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<div class="index-page">
+<section class="section-info">
+  <div class="container">
+    <h2 class="section-title">Empowering Businesses Through Clean, Smart Energy</h2>
+    
+    <p class="section-description">
+      Kakuskos Consulting delivers dependable solar and energy solutions tailored for forward-thinking companies and responsible investors. 
+      From in-depth assessments and strategic planning to seamless installation and post-deployment coaching, we walk with you through every stage of your energy journey.
+    </p>
+    
+ 
+  </div>
+</section>
+
+
+
+<section class="services-section">
+  <div class="container">
+    <h2 class="section-title">Our Core Services</h2>
+    
+    <div class="services-carousel">
+      <div class="carousel-container">
+        <div class="service-item">
+          <i class="fas fa-lightbulb service-icon"></i>
+          <h3 class="service-title">Smart Energy Assessment</h3>
+          <p class="service-desc">Comprehensive evaluation of your energy usage to identify opportunities for efficiency and savings.</p>
+        </div>
+
+        <div class="service-item">
+          <i class="fas fa-solar-panel service-icon"></i>
+          <h3 class="service-title">Custom Solar & Efficiency Plan</h3>
+          <p class="service-desc">Tailored design and planning for solar systems that align with your energy goals.</p>
+        </div>
+
+        <div class="service-item">
+          <i class="fas fa-leaf service-icon"></i>
+          <h3 class="service-title">Sustainability & ESG Roadmap</h3>
+          <p class="service-desc">Guidance for aligning your operations with environmental, social, and governance standards.</p>
+        </div>
+
+        <div class="service-item">
+          <i class="fas fa-headset service-icon"></i>
+          <h3 class="service-title">Remote Energy Coaching</h3>
+          <p class="service-desc">Ongoing expert support to help you monitor and optimize your energy usage remotely.</p>
+        </div>
+
+        <div class="service-item">
+          <i class="fas fa-tools service-icon"></i>
+          <h3 class="service-title">Installation & Supervision</h3>
+          <p class="service-desc">End-to-end installation services with professional oversight to ensure top performance.</p>
+        </div>
+      </div>
+      
+      <button class="carousel-nav prev" aria-label="Previous service">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="carousel-nav next" aria-label="Next service">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+      
+      <div class="carousel-dots"></div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+<section class="booking-section">
+  <div class="container">
+    <h2>Book with us</h2>
+    <p>Ready to go solar or need expert guidance? Book a free session with our team now.</p>
+
+    <form method="post" class="booking-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Submit Request</button>
+    </form>
+  </div>
+</section>
+
+
+
+
+<section class="projects-section">
+  <div class="container">
+    <h2 class="section-title">Our Projects</h2>
+
+    <div class="project-gallery">
+      <div class="project-img">
+        <img src="{% static 'power/images/proj.jpg' %}" alt="Project 1">
+      </div>
+      <div class="project-img">
+        <img src="{% static 'power/images/syface.jpg' %}" alt="Project 2">
+      </div>
+      <div class="project-img">
+        <img src="{% static 'power/images/zigzag.jpg' %}" alt="Project 3">
+      </div>
+      <div class="project-img">
+        <img src="{% static 'power/images/bay.jpg' %}" alt="Project 4">
+      </div>
+
+        <div class="project-img">
+            <img src="{% static 'power/images/hom.jpg' %}" alt="Project 5">
+    </div>
+
+    
+  </div>
+  <div class="project-description">
+      <p>
+        Over the years, Kakuskos Consulting has successfully delivered clean energy solutions across a wide range of clients — from corporate enterprises and manufacturing industries to small firms, residential estates, and individual homeowners.
+        Our tailored solar systems are built to meet each client's unique energy goals and sustainability objectives.
+      </p>
+    </div>
+</section>
+
+
+<section class="testimonial-section">
+  <div class="container">
+    <h2 class="section-title">What Our Clients Say</h2>
+    
+    <div class="testimonial-grid">
+
+      <div class="testimonial-card">
+        <p class="testimonial-text">“From the assessment to final installation, the Kakuskos team was efficient, professional, and honest. My home energy bill has dropped by more than 60%.”</p>
+        <h4 class="testimonial-name">Grace Wanjiru</h4>
+        <p class="testimonial-title">Homeowner – Kiambu</p>
+      </div>
+
+      <div class="testimonial-card">
+        <p class="testimonial-text">“I truly appreciate the remote coaching sessions. Even after installation, they followed up and helped me understand how to track my solar usage better.”</p>
+        <h4 class="testimonial-name">Brian Otieno</h4>
+        <p class="testimonial-title">Tech Consultant – Kisumu</p>
+      </div>
+
+      <div class="testimonial-card">
+        <p class="testimonial-text">“Their ESG guidance helped us rethink our energy strategy. We’re not just saving money — we’re also hitting our sustainability targets faster than planned.”</p>
+        <h4 class="testimonial-name">Janet Naliaka</h4>
+        <p class="testimonial-title">Operations Manager – Nairobi</p>
+      </div>
+
+      <div class="testimonial-card">
+        <p class="testimonial-text">“Kakuskos installed a full solar and battery system across our warehouse facility. The execution was on time and on budget. I would definitely recommend them to any growing enterprise.”</p>
+        <h4 class="testimonial-name">Eng. David Mwangi</h4>
+        <p class="testimonial-title">CEO – Manufacturing Industry</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</div>
+
+
+
+
+<style>
+
+/* Midday Energy Section Styling */
+.section-info {
+  padding: 6rem 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4edf9 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.section-info .container {
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.section-info .section-title {
+  font-size: 2.8rem;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  color: #1a3658;
+  position: relative;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.section-info .section-title::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 6px;
+  background: linear-gradient(90deg, #ffd166, #06d6a0);
+  border-radius: 3px;
+}
+
+.section-info .section-title::after {
+  content: '⚡';
+  position: absolute;
+  right: -10px;
+  top: -15px;
+  font-size: 2rem;
+  animation: pulse 2s infinite;
+}
+
+.section-info .section-description {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #2d3748;
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  text-align: center;
+  position: relative;
+}
+
+/* Solar Flare Background Elements */
+.section-info::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  right: -200px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255,209,102,0.15) 0%, transparent 70%);
+  z-index: 1;
+}
+
+.section-info::after {
+  content: '';
+  position: absolute;
+  bottom: -300px;
+  left: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(6,214,160,0.1) 0%, transparent 70%);
+  z-index: 1;
+}
+
+/* Energy Pulse Animation */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.8;
+  }
+}
+
+/* Sun Rays Effect */
+.section-info .container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200vw;
+  height: 200vh;
+  background-image: 
+    linear-gradient(0deg, transparent 48%, rgba(255,209,102,0.03) 50%, transparent 52%),
+    linear-gradient(30deg, transparent 48%, rgba(255,209,102,0.03) 50%, transparent 52%),
+    linear-gradient(60deg, transparent 48%, rgba(255,209,102,0.03) 50%, transparent 52%),
+    linear-gradient(90deg, transparent 48%, rgba(255,209,102,0.03) 50%, transparent 52%),
+    linear-gradient(120deg, transparent 48%, rgba(255,209,102,0.03) 50%, transparent 52%),
+    linear-gradient(150deg, transparent 48%, rgba(255,209,102,0.03) 50%, transparent 52%),
+    linear-gradient(180deg, transparent 48%, rgba(255,209,102,0.03) 50%, transparent 52%),
+    linear-gradient(210deg, transparent 48%, rgba(255,209,102,0.03) 50%, transparent 52%),
+    linear-gradient(240deg, transparent 48%, rgba(255,209,102,0.03) 50%, transparent 52%),
+    linear-gradient(270deg, transparent 48%, rgba(255,209,102,0.03) 50%, transparent 52%),
+    linear-gradient(300deg, transparent 48%, rgba(255,209,102,0.03) 50%, transparent 52%),
+    linear-gradient(330deg, transparent 48%, rgba(255,209,102,0.03) 50%, transparent 52%);
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+  animation: rotate 120s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .section-info {
+    padding: 4rem 1.5rem;
+  }
+  
+  .section-info .section-title {
+    font-size: 2.2rem;
+  }
+  
+  .section-info .section-description {
+    font-size: 1.1rem;
+    padding: 0 1rem;
+  }
+  
+  .section-info .section-title::after {
+    right: -5px;
+    top: -10px;
+    font-size: 1.5rem;
+  }
+}
+
+/* Energy Highlight Effect */
+.section-info .section-description::selection {
+  background: #ffd166;
+  color: #1a3658;
+}
+
+
+
+
+
+
+
+
+/* Evening-Themed Services Carousel */
+.services-section {
+  padding: 5rem 2rem;
+  background: linear-gradient(135deg, #0a1929 0%, #1a3658 100%);
+  color: #f8f9fa;
+  position: relative;
+  overflow: hidden;
+}
+
+.services-section .container {
+    width: 100%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.services-section .section-title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: white;
+  position: relative;
+}
+
+.services-section .section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #f6ad55, #fbd38d);
+  border-radius: 3px;
+}
+
+/* Carousel Container */
+.services-carousel {
+  position: relative;
+  padding: 0 40px;
+  margin: 0 auto;
+}
+
+.carousel-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 2rem;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.carousel-container::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+/* Service Items */
+.service-item {
+  flex: 0 0 300px;
+  scroll-snap-align: start;
+  background: rgba(15, 32, 39, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-right: 1.5rem;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  transition: all 0.4s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-item:last-child {
+  margin-right: 0;
+}
+
+.service-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  background: rgba(15, 32, 39, 0.8);
+}
+
+.service-icon {
+  font-size: 2.5rem;
+  color: #fbd38d;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.service-title {
+  font-size: 1.4rem;
+  color: white;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.service-desc {
+  color: #cbd5e0;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* Carousel Navigation */
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: rgba(246, 173, 85, 0.8);
+  border: none;
+  border-radius: 50%;
+  color: #1a202c;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-nav:hover {
+  background: #f6ad55;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-nav.prev {
+  left: 0;
+}
+
+.carousel-nav.next {
+  right: 0;
+}
+
+/* Carousel Dots */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.carousel-dots .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  margin: 0 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-dots .dot.active {
+  background: #f6ad55;
+  transform: scale(1.2);
+}
+
+/* Starlight Background Effect */
+.services-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.05) 0%, transparent 2%),
+    radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 2%);
+  z-index: 1;
+}
+
+/* Constellation Animation */
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.services-section::before {
+  animation: twinkle 8s ease-in-out infinite;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .services-section {
+    padding: 3rem 1rem;
+  }
+  
+  .services-section .section-title {
+    font-size: 2rem;
+  }
+  
+  .service-item {
+    flex: 0 0 85%;
+    padding: 1.5rem;
+  }
+  
+  .carousel-nav {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+  }
+}
+
+
+
+
+
+
+
+/* Evening-Themed Booking Section */
+.booking-section {
+  padding: 5rem 2rem;
+  background: linear-gradient(135deg, #0a1929 0%, #1a3658 100%);
+  color: #f8f9fa;
+  position: relative;
+  overflow: hidden;
+}
+
+.booking-section .container {
+  width: 80%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.booking-section h2 {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: white;
+  position: relative;
+}
+
+.booking-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #f6ad55, #fbd38d);
+  border-radius: 3px;
+}
+
+.booking-section p {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #cbd5e0;
+  margin-bottom: 2.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+/* Starlight Background Effect */
+.booking-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80%;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.05) 0%, transparent 2%),
+    radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 2%);
+  z-index: 1;
+}
+
+/* Moonlight Form Design */
+.booking-form {
+  background: rgba(15, 32, 39, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Form Field Styling */
+.booking-form p {
+  margin-bottom: 1.5rem;
+  text-align: left;
+  color: #e2e8f0;
+  position: relative;
+}
+
+.booking-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: #fbd38d;
+}
+
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background: rgba(26, 54, 88, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.booking-form input:focus,
+.booking-form select:focus,
+.booking-form textarea:focus {
+  outline: none;
+  border-color: #f6ad55;
+  box-shadow: 0 0 0 2px rgba(246, 173, 85, 0.2);
+  background: rgba(26, 54, 88, 0.7);
+}
+
+.booking-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Golden Submit Button */
+.booking-form button {
+  background: linear-gradient(135deg, #f6ad55 0%, #fbd38d 100%);
+  color: #1a202c;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.booking-form button:hover {
+  background: linear-gradient(135deg, #f59e2e 0%, #f6ad55 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(245, 158, 46, 0.3);
+}
+
+/* Form Field Focus Effects */
+.booking-form p:focus-within label {
+  color: #f6ad55;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .booking-section {
+    padding: 3rem 1.5rem;
+  }
+  
+  .booking-section h2 {
+    font-size: 2rem;
+  }
+  
+  .booking-form {
+    padding: 1.5rem;
+  }
+}
+
+/* Constellation Animation */
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.booking-section::before {
+  animation: twinkle 8s ease-in-out infinite;
+}
+
+
+
+
+
+
+
+
+/* Projects Section - Magical Style (Fixed Layout) */
+.projects-section {
+  padding: 5rem 2rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9f5ff 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.projects-section .container {
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.projects-section .section-title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: #1a202c;
+  position: relative;
+}
+
+.projects-section .section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, #00a8ff, #4299e1, #f6ad55);
+  border-radius: 2px;
+}
+
+/* Magical Gallery Layout - Fixed Structure */
+.project-gallery {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(8, 80px);
+  gap: 1rem;
+  margin-bottom: 3rem; /* Space before description */
+  perspective: 1000px;
+  order: 1; /* Ensures gallery comes first */
+}
+
+.project-description {
+  order: 2; /* Ensures description comes after */
+  max-width: 800px;
+  margin: 2rem auto 0;
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #444;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 2;
+}
+
+/* Rest of your magical image styles remain the same */
+.project-img {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transform-style: preserve-3d;
+  will-change: transform;
+  filter: brightness(0.95) saturate(0.9);
+}
+
+.project-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1s ease, filter 0.5s ease;
+}
+
+/* Magical Grid Positioning */
+.project-img:nth-child(1) {
+  grid-column: 1 / span 5;
+  grid-row: 1 / span 3;
+  transform: rotate(-2deg);
+}
+
+.project-img:nth-child(2) {
+  grid-column: 6 / span 7;
+  grid-row: 2 / span 4;
+  transform: rotate(1deg);
+}
+
+.project-img:nth-child(3) {
+  grid-column: 2 / span 5;
+  grid-row: 4 / span 3;
+  transform: rotate(3deg);
+}
+
+.project-img:nth-child(4) {
+  grid-column: 7 / span 5;
+  grid-row: 6 / span 3;
+  transform: rotate(-1deg);
+}
+
+.project-img:nth-child(5) {
+  grid-column: 3 / span 6;
+  grid-row: 7 / span 2;
+  transform: rotate(2deg);
+}
+
+/* Hover Magic */
+.project-img:hover {
+  transform: scale(1.05) rotate(0deg) !important;
+  z-index: 10;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+  filter: brightness(1) saturate(1.1);
+}
+
+.project-img:hover img {
+  transform: scale(1.1);
+}
+
+/* Floating Animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.project-img:nth-child(1) {
+  animation: float 6s ease-in-out infinite;
+}
+.project-img:nth-child(2) {
+  animation: float 7s ease-in-out infinite 1s;
+}
+.project-img:nth-child(3) {
+  animation: float 5s ease-in-out infinite 0.5s;
+}
+.project-img:nth-child(4) {
+  animation: float 6.5s ease-in-out infinite 1.5s;
+}
+.project-img:nth-child(5) {
+  animation: float 5.5s ease-in-out infinite;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .project-gallery {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(5, 250px);
+    gap: 2rem;
+  }
+  
+  .project-img:nth-child(1),
+  .project-img:nth-child(2),
+  .project-img:nth-child(3),
+  .project-img:nth-child(4),
+  .project-img:nth-child(5) {
+    grid-column: 1;
+    grid-row: auto;
+    transform: rotate(0deg) !important;
+  }
+  
+  .projects-section .section-title {
+    font-size: 2rem;
+  }
+  
+  .project-description {
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+}
+
+
+
+
+
+/* Evening-Themed Testimonials */
+.testimonial-section {
+  padding: 5rem 2rem;
+  background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  color: #f8f9fa;
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonial-section .container {
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.testimonial-section .section-title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: white;
+  position: relative;
+}
+
+.testimonial-section .section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #f6ad55, #fbd38d);
+  border-radius: 3px;
+}
+
+/* Starlight Background Effect */
+.testimonial-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 2%),
+    radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 2%),
+    radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 2%),
+    radial-gradient(circle at 60% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 2%);
+  z-index: 1;
+}
+
+/* Testimonial Grid Layout */
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+/* Moonlight Card Design */
+.testimonial-card {
+  background: rgba(15, 32, 39, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.testimonial-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.03) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  pointer-events: none;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  background: rgba(15, 32, 39, 0.8);
+}
+
+/* Testimonial Content */
+.testimonial-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #e2e8f0;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.testimonial-text::before {
+  content: '"';
+  position: absolute;
+  left: 0;
+  top: -0.5rem;
+  font-size: 2.5rem;
+  color: rgba(246, 173, 85, 0.3);
+  font-family: serif;
+  line-height: 1;
+}
+
+.testimonial-name {
+  font-size: 1.2rem;
+  color: #fbd38d;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.testimonial-title {
+  font-size: 0.9rem;
+  color: #a0aec0;
+  letter-spacing: 0.5px;
+}
+
+/* Golden Accent Elements */
+.testimonial-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #f6ad55, #fbd38d);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.testimonial-card:hover::after {
+  opacity: 1;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .testimonial-section {
+    padding: 3rem 1.5rem;
+  }
+  
+  .testimonial-section .section-title {
+    font-size: 2rem;
+  }
+  
+  .testimonial-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .testimonial-card {
+    padding: 1.5rem;
+  }
+}
+
+/* Constellation Animation */
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.testimonial-section::before {
+  animation: twinkle 8s ease-in-out infinite;
+}
+
+
+
+.message-container {
+  background-color: #e6f3ec; /* Soft green background */
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1.5rem auto;
+  max-width: 800px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.alert {
+  padding: 0.9rem 1.2rem;
+  border-left: 6px solid;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  position: relative;
+  background-color: #fff;
+}
+
+.alert.success {
+  border-color: #28a745;
+  color: #155724;
+  background-color: #d4edda;
+}
+
+.alert.error {
+  border-color: #dc3545;
+  color: #721c24;
+  background-color: #f8d7da;
+}
+
+.alert.warning {
+  border-color: #ffc107;
+  color: #856404;
+  background-color: #fff3cd;
+}
+
+.alert.info {
+  border-color: #17a2b8;
+  color: #0c5460;
+  background-color: #d1ecf1;
+}
+
+.close-btn {
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  font-size: 1.2rem;
+  color: #000;
+  cursor: pointer;
+  background: none;
+  border: none;
+  line-height: 1;
+}
+
+</style>
+
+
+
+
+<script>
+    // Carousel Functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const carousel = document.querySelector('.carousel-container');
+  const dotsContainer = document.querySelector('.carousel-dots');
+  const items = document.querySelectorAll('.service-item');
+  const prevBtn = document.querySelector('.carousel-nav.prev');
+  const nextBtn = document.querySelector('.carousel-nav.next');
+  
+  // Create dots
+  items.forEach((_, index) => {
+    const dot = document.createElement('span');
+    dot.classList.add('dot');
+    if (index === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => {
+      goToSlide(index);
+    });
+    dotsContainer.appendChild(dot);
+  });
+  
+  const dots = document.querySelectorAll('.carousel-dots .dot');
+  
+  // Navigation functions
+  function goToSlide(index) {
+    carousel.scrollTo({
+      left: items[index].offsetLeft - carousel.offsetLeft,
+      behavior: 'smooth'
+    });
+    updateDots(index);
+  }
+  
+  function updateDots(index) {
+    dots.forEach(dot => dot.classList.remove('active'));
+    dots[index].classList.add('active');
+  }
+  
+  // Button navigation
+  prevBtn.addEventListener('click', () => {
+    const currentIndex = Math.round(carousel.scrollLeft / items[0].offsetWidth);
+    const prevIndex = currentIndex <= 0 ? items.length - 1 : currentIndex - 1;
+    goToSlide(prevIndex);
+  });
+  
+  nextBtn.addEventListener('click', () => {
+    const currentIndex = Math.round(carousel.scrollLeft / items[0].offsetWidth);
+    const nextIndex = currentIndex >= items.length - 1 ? 0 : currentIndex + 1;
+    goToSlide(nextIndex);
+  });
+  
+  // Update dots on scroll
+  carousel.addEventListener('scroll', () => {
+    const currentIndex = Math.round(carousel.scrollLeft / items[0].offsetWidth);
+    updateDots(currentIndex);
+  });
+  
+  // Auto-scroll (optional)
+  let autoScroll = setInterval(() => {
+    const currentIndex = Math.round(carousel.scrollLeft / items[0].offsetWidth);
+    const nextIndex = currentIndex >= items.length - 1 ? 0 : currentIndex + 1;
+    goToSlide(nextIndex);
+  }, 5000);
+  
+  // Pause auto-scroll on hover
+  carousel.addEventListener('mouseenter', () => {
+    clearInterval(autoScroll);
+  });
+  
+  carousel.addEventListener('mouseleave', () => {
+    autoScroll = setInterval(() => {
+      const currentIndex = Math.round(carousel.scrollLeft / items[0].offsetWidth);
+      const nextIndex = currentIndex >= items.length - 1 ? 0 : currentIndex + 1;
+      goToSlide(nextIndex);
+    }, 5000);
+  });
+});
+</script>
+{% endblock %}

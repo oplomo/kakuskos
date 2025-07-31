@@ -1,0 +1,368 @@
+<!-- power/templates/admin/analytics.html -->
+{% extends "adbase.html" %}
+{% load static %}
+
+
+
+{% block content %}
+<div class="analytics-dashboard">
+    <h1>Business Performance Analytics</h1>
+    
+    <div class="chart-row">
+        <div class="chart-container">
+            <h2>Yearly Financial Performance</h2>
+            <canvas id="yearlyFinancialChart"></canvas>
+        </div>
+        
+        <div class="chart-container">
+            <h2>Client Acquisition</h2>
+            <canvas id="clientsChart"></canvas>
+        </div>
+    </div>
+    
+    <div class="chart-row">
+        <div class="chart-container">
+            <h2>Monthly Metrics (Last 12 Months)</h2>
+            <canvas id="monthlyChart"></canvas>
+        </div>
+        
+        <div class="chart-container">
+            <h2>Revenue vs Expenses</h2>
+            <canvas id="revenueExpenseChart"></canvas>
+        </div>
+    </div>
+    
+    <div class="chart-row">
+        <div class="chart-container">
+            <h2>Service Distribution</h2>
+            <canvas id="serviceChart"></canvas>
+        </div>
+        
+        <div class="chart-container">
+            <h2>Profit by Service</h2>
+            <canvas id="profitServiceChart"></canvas>
+        </div>
+    </div>
+    
+    <div class="chart-row">
+        <div class="chart-container">
+            <h2>Client Types Distribution</h2>
+            <canvas id="clientTypeChart"></canvas>
+        </div>
+        
+        <div class="chart-container">
+            <h2>Monthly Client Acquisition</h2>
+            <canvas id="monthlyClientsChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Register plugins
+    Chart.register(ChartDataLabels);
+    
+    // Common chart options
+    const defaultOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            datalabels: {
+                display: false
+            },
+            tooltip: {
+                mode: 'index',
+                intersect: false,
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    };
+    
+    // Yearly Financial Chart
+    new Chart(
+        document.getElementById('yearlyFinancialChart'),
+        {
+            type: 'bar',
+            data: {
+                labels: {{ yearly_labels|safe }},
+                datasets: [
+                    {
+                        label: 'Revenue (KSh)',
+                        data: {{ yearly_revenue_data|safe }},
+                        backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Profit (KSh)',
+                        data: {{ yearly_profit_data|safe }},
+                        backgroundColor: 'rgba(153, 102, 255, 0.7)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                ...defaultOptions,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Amount (KSh)'
+                        }
+                    }
+                }
+            }
+        }
+    );
+    
+    // Clients Per Year Chart
+    new Chart(
+        document.getElementById('clientsChart'),
+        {
+            type: 'line',
+            data: {
+                labels: {{ yearly_labels|safe }},
+                datasets: [
+                    {
+                        label: 'Number of Projects',
+                        data: {{ yearly_clients_data|safe }},
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    }
+                ]
+            },
+            options: defaultOptions
+        }
+    );
+    
+    // Monthly Metrics Chart
+    new Chart(
+        document.getElementById('monthlyChart'),
+        {
+            type: 'bar',
+            data: {
+                labels: {{ monthly_labels|safe }},
+                datasets: [
+                    {
+                        label: 'Revenue',
+                        data: {{ monthly_revenue_data|safe }},
+                        backgroundColor: 'rgba(75, 192, 192, 0.7)'
+                    },
+                    {
+                        label: 'Expenses',
+                        data: {{ monthly_expenses_data|safe }},
+                        backgroundColor: 'rgba(255, 99, 132, 0.7)'
+                    },
+                    {
+                        label: 'Profit',
+                        data: {{ monthly_profit_data|safe }},
+                        backgroundColor: 'rgba(153, 102, 255, 0.7)'
+                    }
+                ]
+            },
+            options: defaultOptions
+        }
+    );
+    
+    // Revenue vs Expenses Chart
+    new Chart(
+        document.getElementById('revenueExpenseChart'),
+        {
+            type: 'scatter',
+            data: {
+                labels: {{ monthly_labels|safe }},
+                datasets: [
+                    {
+                        label: 'Revenue vs Expenses',
+                        data: {{ monthly_revenue_data|safe }}.map((rev, i) => ({
+                            x: rev,
+                            y: {{ monthly_expenses_data|safe }}[i]
+                        })),
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                        pointRadius: 8
+                    }
+                ]
+            },
+            options: {
+                ...defaultOptions,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Revenue (KSh)'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Expenses (KSh)'
+                        }
+                    }
+                }
+            }
+        }
+    );
+    
+    // Service Distribution Chart
+    new Chart(
+        document.getElementById('serviceChart'),
+        {
+            type: 'doughnut',
+            data: {
+                labels: {{ service_labels|safe }},
+                datasets: [{
+                    data: {{ service_data|safe }},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 206, 86, 0.7)',
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(153, 102, 255, 0.7)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                ...defaultOptions,
+                plugins: {
+                    datalabels: {
+                        display: true,
+                        formatter: (value, ctx) => {
+                            let sum = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                            let percentage = (value * 100 / sum).toFixed(1) + "%";
+                            return percentage;
+                        },
+                        color: '#fff',
+                        font: {
+                            weight: 'bold'
+                        }
+                    }
+                }
+            }
+        }
+    );
+    
+    // Profit by Service Chart
+    new Chart(
+        document.getElementById('profitServiceChart'),
+        {
+            type: 'bar',
+            data: {
+                labels: {{ service_labels|safe }},
+                datasets: [{
+                    label: 'Profit (KSh)',
+                    data: {{ service_profit_data|safe }},
+                    backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: defaultOptions
+        }
+    );
+    
+    // Client Type Distribution Chart
+    new Chart(
+        document.getElementById('clientTypeChart'),
+        {
+            type: 'pie',
+            data: {
+                labels: {{ client_type_labels|safe }},
+                datasets: [{
+                    data: {{ client_type_data|safe }},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 206, 86, 0.7)'
+                    ]
+                }]
+            },
+            options: {
+                ...defaultOptions,
+                plugins: {
+                    datalabels: {
+                        display: true,
+                        formatter: (value, ctx) => {
+                            let sum = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                            let percentage = (value * 100 / sum).toFixed(1) + "%";
+                            return percentage;
+                        },
+                        color: '#fff',
+                        font: {
+                            weight: 'bold'
+                        }
+                    }
+                }
+            }
+        }
+    );
+    
+    // Monthly Clients Chart
+    new Chart(
+        document.getElementById('monthlyClientsChart'),
+        {
+            type: 'line',
+            data: {
+                labels: {{ monthly_labels|safe }},
+                datasets: [{
+                    label: 'New Clients',
+                    data: {{ monthly_clients_data|safe }},
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: defaultOptions
+        }
+    );
+    
+    // Refresh charts when data changes
+    document.addEventListener('dataUpdated', function() {
+        window.location.reload();
+    });
+});
+</script>
+
+<style>
+.analytics-dashboard {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+.chart-row {
+    display: flex;
+    margin-bottom: 30px;
+    gap: 20px;
+}
+.chart-container {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    height: 400px;
+    position: relative;
+}
+.chart-container h2 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 15px;
+}
+canvas {
+    width: 100% !important;
+    height: calc(100% - 30px) !important;
+}
+</style>
+{% endblock %}

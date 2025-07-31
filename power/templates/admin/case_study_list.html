@@ -1,0 +1,147 @@
+{% extends "adbase.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header flex justify-between items-center">
+        <h1><i class="fas fa-book-open text-primary"></i> Case Studies</h1>
+        <a href="{% url 'add_case_study' %}" class="btn btn-primary">
+            <i class="fas fa-plus-circle"></i> Add New Case Study
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Client</th>
+                    <th>Type</th>
+                    <th>Service</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for case in case_studies %}
+                <tr>
+                    <td>
+                        <strong>{{ case.title }}</strong>
+                        {% if case.featured %}
+                        <span class="prosperity-badge ml-2"><i class="fas fa-star"></i> Featured</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ case.client_name }}</td>
+                    <td>
+                        <span class="client-type-badge client-type-{{ case.client_type|lower }}">
+                            {{ case.get_client_type_display }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="service-tag" style="background-color: {{ case.service.color|default:'#F39C12' }}20; color: {{ case.service.color|default:'#F39C12' }}; border: 1px solid {{ case.service.color|default:'#F39C12' }}30;">
+                            {{ case.service.title }}
+                        </span>
+                    </td>
+                    <td class="actions">
+                        <a href="{% url 'edit_case_study' case.pk %}" class="btn btn-secondary btn-sm">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <a href="{% url 'delete_case_study' case.pk %}" class="btn btn-error btn-sm">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    /* Case Study specific styles */
+    .client-type-badge {
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+    
+    .client-type-corporate {
+        background-color: rgba(52, 152, 219, 0.1);
+        color: #3498DB;
+        border: 1px solid rgba(52, 152, 219, 0.3);
+    }
+    
+    .client-type-individual {
+        background-color: rgba(155, 89, 182, 0.1);
+        color: #9B59B6;
+        border: 1px solid rgba(155, 89, 182, 0.3);
+    }
+    
+    .client-type-government {
+        background-color: rgba(231, 76, 60, 0.1);
+        color: var(--error);
+        border: 1px solid rgba(231, 76, 60, 0.3);
+    }
+    
+    .client-type-nonprofit {
+        background-color: rgba(46, 204, 113, 0.1);
+        color: var(--success);
+        border: 1px solid rgba(46, 204, 113, 0.3);
+    }
+    
+    .service-tag {
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        display: inline-block;
+    }
+    
+    .actions {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+    
+    .btn-error {
+        background-color: var(--error);
+        color: white;
+    }
+    
+    .btn-error:hover {
+        background-color: #C0392B;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+    }
+    
+    .ml-2 {
+        margin-left: 0.5rem;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .actions {
+            flex-direction: column;
+        }
+        
+        .btn-sm {
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add any case study specific JS here
+        // Example: Confirm before deleting
+        const deleteButtons = document.querySelectorAll('.btn-error');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (!confirm('Are you sure you want to delete this case study?')) {
+                    e.preventDefault();
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

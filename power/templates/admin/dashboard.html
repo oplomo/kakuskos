@@ -1,0 +1,297 @@
+{% extends "adbase.html" %}
+
+{% block content %}
+<div class="dashboard">
+    <div class="card">
+        <div class="card-header">
+            <h1>Kakuskos Admin Dashboard</h1>
+            <span class="prosperity-badge">
+                <i class="fas fa-coins"></i> 
+                {% if total_profit > 50000 %}Prosperity{% else %}Growth{% endif %} Mode
+            </span>
+        </div>
+        
+        <section class="stats-grid">
+            <div class="stat-card bg-light">
+                <h3><i class="fas fa-concierge-bell text-primary"></i> Total Services</h3>
+                <p class="stat-value">{{ total_services }}</p>
+                <div class="stat-trend {% if service_growth > 0 %}text-success{% else %}text-error{% endif %}">
+                    <i class="fas fa-arrow-{% if service_growth > 0 %}up{% else %}down{% endif %}"></i> 
+                    {{ service_growth }}% from {{ last_month }}
+                </div>
+            </div>
+            
+            <div class="stat-card bg-light">
+                <h3><i class="fas fa-book-open text-primary"></i> Case Studies</h3>
+                <p class="stat-value">{{ total_case_studies }}</p>
+                <div class="stat-trend {% if case_study_growth > 0 %}text-success{% else %}text-error{% endif %}">
+                    <i class="fas fa-arrow-{% if case_study_growth > 0 %}up{% else %}down{% endif %}"></i> 
+                    {{ case_study_growth }}% from {{ last_month }}
+                </div>
+            </div>
+            
+            <div class="stat-card bg-light">
+                <h3><i class="fas fa-project-diagram text-primary"></i> Active Projects</h3>
+                <p class="stat-value">{{ active_projects }}</p>
+                <div class="stat-trend text-secondary">
+                    <i class="fas fa-chart-line"></i> 
+                    {{ new_projects_this_week }} new this week
+                </div>
+            </div>
+            
+            <div class="stat-card bg-light">
+                <h3><i class="fas fa-clipboard-list text-primary"></i> Service Requests</h3>
+                <p class="stat-value">{{ total_requests }}</p>
+                <div class="stat-trend {% if pending_requests > 5 %}text-error{% else %}text-success{% endif %}">
+                    {{ pending_requests }} pending ({{ completed_requests_this_month }} completed in {{ current_month }})
+                </div>
+            </div>
+            
+            <div class="stat-card bg-light">
+                <h3><i class="fas fa-money-bill-wave text-primary"></i> Annual Revenue</h3>
+                <p class="stat-value">KSh {{ total_revenue|floatformat:2 }}</p>
+                <div class="stat-trend text-success">
+                    <i class="fas fa-coins"></i> 
+                    KSh {{ total_profit|floatformat:2 }} profit
+                </div>
+            </div>
+            
+            <div class="stat-card bg-light">
+                <h3><i class="fas fa-clock text-primary"></i> Project Efficiency</h3>
+                <p class="stat-value">{{ avg_project_duration }} days</p>
+                <div class="stat-trend {% if avg_project_duration < 14 %}text-success{% else %}text-error{% endif %}">
+                    <i class="fas fa-{% if avg_project_duration < 14 %}check-circle{% else %}exclamation-circle{% endif %}"></i> 
+                    {% if avg_project_duration < 14 %}Excellent{% else %}Needs improvement{% endif %}
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h2><i class="fas fa-clipboard-list"></i> Service Requests</h2>
+            <a href="{% url 'service_request_list' %}" class="btn btn-secondary">
+                <i class="fas fa-eye"></i> View All
+            </a>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Service</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in recent_requests %}
+                    <tr>
+                        <td>{{ req.name }}</td>
+                        <td>{{ req.get_service_display }}</td>
+                        <td>{{ req.submitted_at|date:"Y-m-d" }}</td>
+                        <td>
+                            <span class="status-badge {% if req.is_completed %}status-completed{% else %}status-pending{% endif %}">
+                                {% if req.is_completed %}Completed{% else %}Pending{% endif %}
+                            </span>
+                        </td>
+                        <td>
+                            {% if not req.is_completed %}
+                            <a href="{% url 'mark_request_completed' req.pk %}" class="btn btn-primary btn-sm">
+                                <i class="fas fa-check-circle"></i> Mark Complete
+                            </a>
+                            {% else %}
+                            <span class="text-muted">No action needed</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h2><i class="fas fa-user-shield"></i> Recent Admin Activity</h2>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Admin</th>
+                        <th>Action</th>
+                        <th>Details</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in admin_logs %}
+                    <tr>
+                        <td><strong>{{ log.admin_user }}</strong></td>
+                        <td>
+                            <span class="action-badge action-{{ log.action|lower }}">
+                                {{ log.get_action_display }}
+                            </span>
+                        </td>
+                        <td>{{ log.details|truncatechars:50 }}</td>
+                        <td>{{ log.timestamp|date:"Y-m-d H:i" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Dashboard specific styles */
+    .dashboard {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin: 1.5rem 0;
+    }
+    
+    .stat-card {
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        border-left: 4px solid var(--primary);
+        transition: transform 0.3s ease;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(231, 76, 60, 0.1);
+    }
+    
+    .stat-card h3 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        color: var(--dark);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .stat-value {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin: 0.5rem 0;
+    }
+    
+    .stat-trend {
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+    
+    /* Table enhancements */
+    .styled-table {
+        border-collapse: separate;
+        border-spacing: 0;
+        width: 100%;
+    }
+    
+    .styled-table th {
+        position: sticky;
+        top: 0;
+        background: linear-gradient(to bottom, var(--primary), var(--primary-dark));
+    }
+    
+    .styled-table tr:nth-child(even) {
+        background-color: #FFF9F9;
+    }
+    
+    .styled-table tr:hover {
+        background-color: #FFEFEF;
+    }
+    
+    /* Status badges */
+    .status-badge {
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+    
+    .status-completed {
+        background-color: rgba(46, 204, 113, 0.2);
+        color: var(--success);
+    }
+    
+    .status-pending {
+        background-color: rgba(241, 196, 15, 0.2);
+        color: #F39C12;
+    }
+    
+    /* Action badges */
+    .action-badge {
+        padding: 0.3rem 0.6rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+    
+    .action-create {
+        background-color: rgba(46, 204, 113, 0.1);
+        color: var(--success);
+        border: 1px solid rgba(46, 204, 113, 0.3);
+    }
+    
+    .action-update {
+        background-color: rgba(52, 152, 219, 0.1);
+        color: #3498DB;
+        border: 1px solid rgba(52, 152, 219, 0.3);
+    }
+    
+    .action-delete {
+        background-color: rgba(231, 76, 60, 0.1);
+        color: var(--error);
+        border: 1px solid rgba(231, 76, 60, 0.3);
+    }
+    
+    /* Responsive table */
+    .table-responsive {
+        overflow-x: auto;
+        margin-top: 1rem;
+    }
+    
+    /* Small buttons */
+    .btn-sm {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+    }
+    
+    .text-muted {
+        color: #999;
+        font-style: italic;
+    }
+</style>
+
+<script>
+    // Add any dashboard-specific JavaScript here
+    document.addEventListener('DOMContentLoaded', function() {
+        // Example: Animate stat cards on load
+        const statCards = document.querySelectorAll('.stat-card');
+        statCards.forEach((card, index) => {
+            setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,207 @@
+{% extends "adbase.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1><i class="fas fa-edit text-primary"></i> {{ title }}</h1>
+    </div>
+    
+    <div class="form-container">
+        <form method="post" enctype="multipart/form-data" class="prosperity-form">
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+            <div class="form-errors">
+                {% for error in form.non_field_errors %}
+                <div class="alert alert-error">
+                    <i class="fas fa-exclamation-circle"></i> {{ error }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            {% for field in form %}
+            <div class="form-group {% if field.errors %}has-error{% endif %}">
+                <label for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                    {% if field.field.required %}<span class="required">*</span>{% endif %}
+                </label>
+                
+                {{ field }}
+                
+                {% if field.help_text %}
+                <div class="help-text">{{ field.help_text }}</div>
+                {% endif %}
+                
+                {% if field.errors %}
+                <div class="error-list">
+                    {% for error in field.errors %}
+                    <span class="error-message"><i class="fas fa-exclamation-circle"></i> {{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Save
+                </button>
+                <a href="{{ request.META.HTTP_REFERER|default:'javascript:history.back()' }}" class="btn btn-secondary">
+                    <i class="fas fa-times"></i> Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    /* Form specific styles */
+    .form-container {
+        padding: 2rem;
+    }
+    
+    .prosperity-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .form-group label {
+        font-weight: 500;
+        color: var(--dark);
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+    
+    .required {
+        color: var(--error);
+        font-size: 1.2rem;
+        line-height: 1;
+    }
+    
+    .prosperity-form input:not([type="checkbox"]):not([type="radio"]),
+    .prosperity-form select,
+    .prosperity-form textarea {
+        padding: 0.8rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .prosperity-form input:focus,
+    .prosperity-form select:focus,
+    .prosperity-form textarea:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+        outline: none;
+    }
+    
+    .prosperity-form textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+    
+    .help-text {
+        font-size: 0.85rem;
+        color: #666;
+        margin-top: 0.3rem;
+    }
+    
+    .error-list {
+        margin-top: 0.3rem;
+    }
+    
+    .error-message {
+        color: var(--error);
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+    
+    .has-error input,
+    .has-error select,
+    .has-error textarea {
+        border-color: var(--error);
+    }
+    
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+        flex-wrap: wrap;
+    }
+    
+    .alert {
+        padding: 1rem;
+        border-radius: 6px;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+    }
+    
+    .alert-error {
+        background-color: rgba(231, 76, 60, 0.1);
+        color: var(--error);
+        border-left: 4px solid var(--error);
+    }
+    
+    /* Checkbox and radio specific styles */
+    .prosperity-form input[type="checkbox"],
+    .prosperity-form input[type="radio"] {
+        width: auto;
+        margin-right: 0.5rem;
+    }
+    
+    /* File upload styling */
+    .prosperity-form input[type="file"] {
+        border: none;
+        padding: 0.5rem 0;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .form-actions {
+            flex-direction: column;
+        }
+        
+        .form-actions .btn {
+            width: 100%;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add any form specific JS here
+        const saveBtn = document.querySelector('.btn-primary');
+        saveBtn.addEventListener('click', function() {
+            // Optional: Add loading state
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+        });
+        
+        // Add prosperity effect to form inputs
+        const inputs = document.querySelectorAll('.prosperity-form input, .prosperity-form select, .prosperity-form textarea');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.borderColor = 'var(--primary)';
+                this.style.boxShadow = '0 0 0 3px rgba(231, 76, 60, 0.2)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.style.boxShadow = 'none';
+            });
+        });
+    });
+</script>
+{% endblock %}

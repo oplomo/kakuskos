@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}ESG Resources{% endblock %}
+
+{% block content %}
+<section>
+    <h1>Sustainability & ESG Resources</h1>
+    
+    {% if resources %}
+    <div>
+        {% for resource in resources %}
+        <article>
+            <h2>{{ resource.title }}</h2>
+            <p><strong>Type:</strong> {{ resource.get_resource_type_display }}</p>
+            <p>{{ resource.description }}</p>
+            <a href="{{ resource.file.url }}" download>Download Resource</a>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No resources available at this time.</p>
+    {% endif %}
+</section>
+{% endblock %}

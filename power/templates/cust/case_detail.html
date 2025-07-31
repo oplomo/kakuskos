@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Case Study: {{ case.title }}{% endblock %}
+
+{% block content %}
+<article>
+    <h1>{{ case.title }}</h1>
+    
+    <section>
+        <h2>Client Details</h2>
+        <p><strong>Type:</strong> {{ case.get_client_type_display }}</p>
+        {% if case.client_name %}
+        <p><strong>Client:</strong> {{ case.client_name }}</p>
+        {% endif %}
+        <p><strong>Location:</strong> {{ case.location }}</p>
+        <p><strong>Date Installed:</strong> {{ case.installation_date }}</p>
+    </section>
+    
+    <section>
+        <h2>System Details</h2>
+        <p><strong>Capacity:</strong> {{ case.system_capacity }} kW</p>
+        <p><strong>Project Cost:</strong> KSh {{ case.project_cost }}</p>
+    </section>
+    
+    <section>
+        <h2>Energy Results</h2>
+        <p><strong>Previous Consumption:</strong> {{ case.previous_consumption }} kWh/month</p>
+        <p><strong>Current Consumption:</strong> {{ case.current_consumption }} kWh/month</p>
+        <p><strong>Energy Savings:</strong> {{ case.energy_savings }} kWh/month ({{ case.savings_percentage|floatformat:0 }}%)</p>
+    </section>
+    
+    {% if case.testimonial %}
+    <section>
+        <h2>Client Testimonial</h2>
+        <blockquote>{{ case.testimonial }}</blockquote>
+    </section>
+    {% endif %}
+    
+    <a href="{% url 'service_detail' case.service.slug %}">← Back to {{ case.service.title }}</a>
+</article>
+{% endblock %}

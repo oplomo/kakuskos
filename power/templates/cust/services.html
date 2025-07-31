@@ -1,0 +1,882 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Our Services | Kakuskos Consulting{% endblock %}
+
+{% block content %}
+
+<main class="services-page">
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Our Signature Services</h1>
+            <p class="subtitle">Smart energy solutions for a sustainable future</p>
+        </div>
+    </section>
+
+    <div class="services-container">
+        {% for service in services %}
+        <section class="service-section {% cycle 'image-right' 'image-left' %}">
+            <div class="service-content">
+                <div class="text-content">
+                    <div class="service-header">
+                        <i class="{{ service.icon_class }} service-icon"></i>
+                        <h2>{{ service.title }}</h2>
+                    </div>
+                    <p class="service-description">{{ service.description }}</p>
+                    <div class="value-proposition">
+                        <h3>Why Choose This Service</h3>
+                        <p>{{ service.value_proposition }}</p>
+                    </div>
+                </div>
+                
+                <div class="image-content">
+                    {% if service.image %}
+                    <img src="{{ service.image.url }}" alt="{{ service.title }}" class="service-image">
+                    {% else %}
+                    <div class="image-placeholder">
+                        <i class="{{ service.icon_class }} placeholder-icon"></i>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+        {% endfor %}
+    </div>
+
+    <section class="case-studies-carousel">
+    <h2>Recent Success Stories</h2>
+    <div class="carousel-container">
+        <button class="carousel-control prev" aria-label="Previous case study">&#10094;</button>
+        
+        <div class="carousel-track">            
+            {% for project in recent_projects %}
+            <div class="case-study-card" data-index="{{ forloop.counter0 }}">
+                {% if project.featured_image %}
+                <div class="case-study-image" style="background-image: url('{{ project.featured_image.url }}')"></div>
+                {% else %}
+                <div class="case-study-image placeholder">
+                    <i class="fas fa-solar-panel"></i>
+                </div>
+                {% endif %}
+                
+                <div class="case-study-content">
+                    <div class="client-badge {{ project.client_type|lower }}">
+                        {{ project.get_client_type_display }}
+                    </div>
+                    <h3>{{ project.title }}</h3>
+                    <p class="location">{{ project.location }}</p>
+                    
+                    <div class="metrics-grid">
+                        <div class="metric">
+                            <span class="metric-value">{{ project.system_capacity }} kW</span>
+                            <span class="metric-label">System Size</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">{{ project.energy_savings }} kWh</span>
+                            <span class="metric-label">Monthly Savings</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">{{ project.savings_percentage|floatformat:0 }}%</span>
+                            <span class="metric-label">Efficiency Gain</span>
+                        </div>
+                    </div>
+                    
+                    {% if project.testimonial %}
+                    <div class="testimonial">
+                        <p>"{{ project.testimonial|truncatewords:20 }}"</p>
+                        {% if project.client_name %}
+                        <p class="client-name">— {{ project.client_name }}</p>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    
+                    {% comment %} <a href="{% url 'case_study_detail' project.id %}" class="view-details">View Full Case Study</a> {% endcomment %}
+                    <div>completed</div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <button class="carousel-control next" aria-label="Next case study">&#10095;</button>
+    </div>
+    
+    <div class="carousel-dots">
+        {% for project in recent_projects %}
+        <button class="dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.counter0 }}" aria-label="Go to case study {{ forloop.counter }}"></button>
+        {% endfor %}
+    </div>
+</section>
+
+</main>
+
+
+<style>
+    /* Dark + Evening + Cool Color Palette */
+:root {
+    --dark-primary: #0a192f;       /* Navy Blue */
+    --dark-secondary: #172a45;     /* Darker Blue */
+    --accent: #64ffda;             /* Teal */
+    --text-primary: #ccd6f6;       /* Light Blue */
+    --text-secondary: #8892b0;     /* Gray-Blue */
+    --highlight: #1e90ff;          /* Vibrant Blue */
+    --card-bg: #112240;            /* Dark Card Background */
+}
+
+.services-page {
+    background-color: var(--dark-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    margin: 0;
+}
+
+.hero-section {
+    background: linear-gradient(rgba(10, 25, 47, 0.7), rgba(10, 25, 47, 0.7)), 
+                url('{% static "power/images/syface.jpg" %}');
+    background-size: cover;
+    background-position: center;
+    height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 2rem;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--accent);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.services-container {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+}
+
+.service-section {
+    margin-bottom: 6rem;
+    position: relative;
+}
+
+.service-content {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+    transition: transform 0.3s ease;
+}
+
+.service-content:hover {
+    transform: translateY(-10px);
+}
+
+.image-right .service-content {
+    flex-direction: row;
+}
+
+.image-left .service-content {
+    flex-direction: row-reverse;
+}
+
+.text-content {
+    flex: 1;
+    padding: 1rem;
+}
+
+.service-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.service-icon {
+    font-size: 2rem;
+    color: var(--accent);
+    margin-right: 1rem;
+}
+
+.service-header h2 {
+    font-size: 1.8rem;
+    margin: 0;
+    color: var(--accent);
+}
+
+.service-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.value-proposition {
+    background: rgba(100, 255, 218, 0.1);
+    padding: 1.5rem;
+    border-radius: 5px;
+    margin-bottom: 2rem;
+    border-left: 2px solid var(--accent);
+}
+
+.value-proposition h3 {
+    color: var(--accent);
+    margin-top: 0;
+}
+
+.image-content {
+    flex: 1;
+    position: relative;
+}
+
+.service-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 20px 30px -15px rgba(0, 0, 0, 0.5);
+    transition: transform 0.5s ease;
+}
+
+.service-image:hover {
+    transform: scale(1.03);
+}
+
+.image-placeholder {
+    height: 300px;
+    background: linear-gradient(135deg, #112240 0%, #1e3a8a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.placeholder-icon {
+    font-size: 5rem;
+    color: rgba(100, 255, 218, 0.2);
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+    background: rgba(100, 255, 218, 0.1);
+    transform: translateY(-3px);
+}
+
+/* Recent Projects Section */
+.recent-projects {
+    max-width: 1200px;
+    margin: 6rem auto;
+    padding: 0 2rem;
+}
+
+.recent-projects h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 3rem;
+    color: var(--accent);
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.project-card {
+    background: var(--card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+}
+
+.project-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.project-card h3 {
+    padding: 1rem 1rem 0;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.project-location {
+    padding: 0 1rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.project-link {
+    display: block;
+    padding: 1rem;
+    color: var(--accent);
+    text-decoration: none;
+    text-align: right;
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .service-content {
+        flex-direction: column !important;
+        
+    }
+    
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+   
+}
+
+
+
+
+
+
+/* Case Study Carousel */
+.case-studies-carousel {
+    max-width: 1200px;
+    margin: 5rem auto;
+    padding: 0 2rem;
+    position: relative;
+}
+
+.case-studies-carousel h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--accent);
+    position: relative;
+}
+
+.case-studies-carousel h2::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    background: var(--accent);
+    margin: 0.5rem auto;
+}
+
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    height: 500px;
+    border: 3px solid var(--dark-secondary);
+}
+
+.case-study-card {
+    min-width: 100%;
+    display: flex;
+    background: var(--card-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    position: relative;
+}
+
+.case-study-card.active {
+    opacity: 1;
+}
+
+.case-study-image {
+    flex: 1;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.case-study-image.placeholder {
+    background: linear-gradient(135deg, #112240 0%, #1e3a8a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.case-study-image.placeholder i {
+    font-size: 4rem;
+    color: rgba(100, 255, 218, 0.2);
+}
+
+.case-study-content {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.client-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: var(--dark-primary);
+}
+
+.client-badge.res {
+    background: #64ffda;
+}
+
+.client-badge.com {
+    background: #1e90ff;
+}
+
+.client-badge.ind {
+    background: #ff6b6b;
+}
+
+.case-study-content h3 {
+    margin-top: 0.5rem;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+}
+
+.location {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.metric {
+    background: rgba(100, 255, 218, 0.1);
+    padding: 0.8rem;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.metric-value {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--accent);
+}
+
+.metric-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.testimonial {
+    margin-top: auto;
+    font-style: italic;
+    color: var(--text-secondary);
+    border-left: 2px solid var(--accent);
+    padding-left: 1rem;
+}
+
+.client-name {
+    text-align: right;
+    font-weight: bold;
+    color: var(--text-primary);
+}
+
+.view-details {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.8rem 1.5rem;
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    align-self: flex-start;
+}
+
+.view-details:hover {
+    background: rgba(100, 255, 218, 0.1);
+}
+
+/* Carousel Controls */
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(30, 42, 71, 0.8);
+    color: var(--accent);
+    border: none;
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.carousel-control:hover {
+    background: var(--accent);
+    color: var(--dark-primary);
+}
+
+.carousel-control.prev {
+    left: 20px;
+}
+
+.carousel-control.next {
+    right: 20px;
+}
+
+/* Carousel Dots */
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+    gap: 10px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--text-secondary);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background: var(--accent);
+    transform: scale(1.2);
+}
+
+
+/* Mobile First Approach - Base styles already in your main CSS */
+
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+    .hero-section {
+        height: 30vh;
+        padding: 1rem;
+    }
+
+    .hero-content h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .service-content {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    .service-section.image-right .service-content,
+    .service-section.image-left .service-content {
+        flex-direction: column;
+    }
+
+    .text-content, .image-content {
+        width: 100%;
+    }
+
+    .service-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .service-icon {
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+    }
+
+    .value-proposition {
+        padding: 1rem;
+    }
+
+    .case-studies-carousel h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .case-study-content {
+        padding: 1.5rem;
+    }
+
+    .client-badge {
+        top: 10px;
+        left: 10px;
+        font-size: 0.7rem;
+        padding: 0.2rem 0.6rem;
+    }
+
+    .case-study-content h3 {
+        font-size: 1.3rem;
+        margin-top: 0.8rem;
+    }
+
+    .testimonial {
+        font-size: 0.9rem;
+    }
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 400px) {
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .service-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .metrics-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+
+    .metric {
+        padding: 0.6rem;
+    }
+
+    .metric-value {
+        font-size: 1.1rem;
+    }
+
+    .carousel-dots {
+        margin-top: 1rem;
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .carousel-control {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+
+    .view-details, .cta-button {
+        padding: 0.7rem 1.2rem;
+    }
+}
+
+/* Landscape orientation adjustments */
+@media (max-width: 900px) and (orientation: landscape) {
+    .hero-section {
+        height: 40vh;
+    }
+
+    .case-study-card {
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+}
+</style>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Animate service sections on scroll
+    const serviceSections = document.querySelectorAll('.service-section');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = 1;
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    serviceSections.forEach(section => {
+        section.style.opacity = 0;
+        section.style.transform = 'translateY(50px)';
+        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(section);
+    });
+    
+    // Add hover effect to project cards
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            const img = this.querySelector('img');
+            if (img) {
+                img.style.transform = 'scale(1.05)';
+            }
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            const img = this.querySelector('img');
+            if (img) {
+                img.style.transform = 'scale(1)';
+            }
+        });
+    });
+});
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const track = document.querySelector('.carousel-track');
+    const cards = document.querySelectorAll('.case-study-card');
+    const dots = document.querySelectorAll('.dot');
+    const prevBtn = document.querySelector('.carousel-control.prev');
+    const nextBtn = document.querySelector('.carousel-control.next');
+    let currentIndex = 0;
+    let autoSlideInterval;
+    const slideDuration = 5000; // 5 seconds
+    
+    // Initialize carousel
+    function initCarousel() {
+        cards.forEach((card, index) => {
+            if (index === 0) {
+                card.classList.add('active');
+            } else {
+                card.classList.remove('active');
+            }
+        });
+        
+        updateDots();
+        startAutoSlide();
+    }
+    
+    // Update active dot
+    function updateDots() {
+        dots.forEach((dot, index) => {
+            if (index === currentIndex) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+    }
+    
+    // Go to specific slide
+    function goToSlide(index) {
+        currentIndex = index;
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        
+        cards.forEach((card, i) => {
+            if (i === currentIndex) {
+                card.classList.add('active');
+            } else {
+                card.classList.remove('active');
+            }
+        });
+        
+        updateDots();
+        resetAutoSlide();
+    }
+    
+    // Next slide
+    function nextSlide() {
+        if (currentIndex < cards.length - 1) {
+            goToSlide(currentIndex + 1);
+        } else {
+            goToSlide(0);
+        }
+    }
+    
+    // Previous slide
+    function prevSlide() {
+        if (currentIndex > 0) {
+            goToSlide(currentIndex - 1);
+        } else {
+            goToSlide(cards.length - 1);
+        }
+    }
+    
+    // Auto slide
+    function startAutoSlide() {
+        autoSlideInterval = setInterval(nextSlide, slideDuration);
+    }
+    
+    function resetAutoSlide() {
+        clearInterval(autoSlideInterval);
+        startAutoSlide();
+    }
+    
+    // Event listeners
+    nextBtn.addEventListener('click', function() {
+        nextSlide();
+    });
+    
+    prevBtn.addEventListener('click', function() {
+        prevSlide();
+    });
+    
+    dots.forEach(dot => {
+        dot.addEventListener('click', function() {
+            const index = parseInt(this.getAttribute('data-index'));
+            goToSlide(index);
+        });
+    });
+    
+    // Pause on hover
+    track.addEventListener('mouseenter', function() {
+        clearInterval(autoSlideInterval);
+    });
+    
+    track.addEventListener('mouseleave', function() {
+        startAutoSlide();
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight') {
+            nextSlide();
+        } else if (e.key === 'ArrowLeft') {
+            prevSlide();
+        }
+    });
+    
+    // Initialize
+    initCarousel();
+});
+</script>
+
+{% endblock %}

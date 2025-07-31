@@ -1,0 +1,376 @@
+{% extends "adbase.html" %}
+
+{% block content %}
+<div class="wealth-form-container">
+    <div class="wealth-form-header">
+        <h1><i class="fas fa-coins"></i> {{ title }}</h1>
+        <div class="wealth-meter">
+            <div class="wealth-bar" style="width: 85%"></div>
+        </div>
+    </div>
+
+    <form method="post" class="wealth-form">
+        {% csrf_token %}
+        
+        <!-- Form Errors -->
+        {% if form.non_field_errors %}
+        <div class="wealth-alert wealth-error">
+            <i class="fas fa-exclamation-circle"></i>
+            <div>
+                {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Form Fields -->
+        {% for field in form %}
+        <div class="wealth-field {% if field.errors %}wealth-field-error{% endif %}">
+            <div class="wealth-field-header">
+                <label for="{{ field.id_for_label }}">
+                    <i class="fas fa-arrow-right"></i> {{ field.label }}
+                    {% if field.field.required %}<span class="wealth-required">*</span>{% endif %}
+                </label>
+                {% if field.help_text %}
+                <div class="wealth-tooltip">
+                    <i class="fas fa-info-circle"></i>
+                    <span class="wealth-tooltip-text">{{ field.help_text }}</span>
+                </div>
+                {% endif %}
+            </div>
+            
+            {{ field }}
+            
+            {% if field.errors %}
+            <div class="wealth-error-messages">
+                {% for error in field.errors %}
+                <p><i class="fas fa-times-circle"></i> {{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <!-- Form Actions -->
+        <div class="wealth-actions">
+            <button type="submit" class="wealth-btn wealth-btn-primary">
+                <i class="fas fa-piggy-bank"></i> Invest Changes
+            </button>
+            <a href="{% if request.META.HTTP_REFERER %}{{ request.META.HTTP_REFERER }}{% else %}{% url 'case_study_list' %}{% endif %}" class="wealth-btn wealth-btn-secondary">
+                <i class="fas fa-hand-holding-usd"></i> Cancel
+            </a>
+        </div>
+    </form>
+</div>
+
+<style>
+    /* Wealth Form Container */
+    .wealth-form-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(233, 144, 41, 0.15);
+        border-top: 5px solid #E67E22;
+    }
+
+    /* Header Styles */
+    .wealth-form-header {
+        background: linear-gradient(135deg, #E74C3C, #D35400);
+        color: white;
+        padding: 1.8rem 2.5rem;
+        position: relative;
+    }
+
+    .wealth-form-header h1 {
+        margin: 0;
+        font-size: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .wealth-meter {
+        height: 6px;
+        background: rgba(255, 255, 255, 0.2);
+        margin-top: 1.2rem;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .wealth-bar {
+        height: 100%;
+        background: linear-gradient(90deg, #F1C40F, #F39C12);
+        border-radius: 3px;
+        animation: wealth-pulse 2s infinite alternate;
+    }
+
+    /* Form Styles */
+    .wealth-form {
+        padding: 2rem 2.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    /* Field Styles */
+    .wealth-field {
+        position: relative;
+    }
+
+    .wealth-field-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.8rem;
+    }
+
+    .wealth-field label {
+        font-weight: 600;
+        color: #2C3E50;
+        font-size: 1.05rem;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+    }
+
+    .wealth-field label i {
+        color: #E67E22;
+        font-size: 0.9rem;
+    }
+
+    .wealth-required {
+        color: #E74C3C;
+        margin-left: 0.3rem;
+        font-size: 1.1rem;
+    }
+
+    /* Input Styles */
+    .wealth-form input:not([type="checkbox"]):not([type="radio"]),
+    .wealth-form select,
+    .wealth-form textarea {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        border: 2px solid #EDEDED;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background-color: #FFFBF7;
+    }
+
+    .wealth-form input:focus,
+    .wealth-form select:focus,
+    .wealth-form textarea:focus {
+        border-color: #F39C12;
+        box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.2);
+        outline: none;
+        background-color: white;
+    }
+
+    .wealth-form textarea {
+        min-height: 150px;
+        resize: vertical;
+    }
+
+    /* Error States */
+    .wealth-field-error input,
+    .wealth-field-error select,
+    .wealth-field-error textarea {
+        border-color: #E74C3C !important;
+        background-color: #FFF9F9 !important;
+    }
+
+    .wealth-error-messages {
+        color: #E74C3C;
+        font-size: 0.9rem;
+        margin-top: 0.6rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+
+    .wealth-error-messages i {
+        margin-right: 0.5rem;
+    }
+
+    /* Tooltip Styles */
+    .wealth-tooltip {
+        position: relative;
+        color: #F39C12;
+        cursor: help;
+    }
+
+    .wealth-tooltip-text {
+        visibility: hidden;
+        width: 250px;
+        background-color: #2C3E50;
+        color: white;
+        text-align: center;
+        border-radius: 8px;
+        padding: 0.8rem;
+        position: absolute;
+        z-index: 100;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: opacity 0.3s;
+        font-size: 0.9rem;
+        font-weight: normal;
+        line-height: 1.5;
+    }
+
+    .wealth-tooltip:hover .wealth-tooltip-text {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    /* Alert Styles */
+    .wealth-alert {
+        padding: 1.2rem 1.5rem;
+        border-radius: 8px;
+        display: flex;
+        gap: 1.2rem;
+        align-items: flex-start;
+        margin-bottom: 1.5rem;
+    }
+
+    .wealth-error {
+        background-color: #FFF5F5;
+        border-left: 4px solid #E74C3C;
+        color: #E74C3C;
+    }
+
+    /* Button Styles */
+    .wealth-actions {
+        display: flex;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .wealth-btn {
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        font-size: 1.05rem;
+        border: none;
+    }
+
+    .wealth-btn-primary {
+        background: linear-gradient(135deg, #F39C12, #E67E22);
+        color: white;
+    }
+
+    .wealth-btn-primary:hover {
+        background: linear-gradient(135deg, #E67E22, #F39C12);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(230, 126, 34, 0.4);
+    }
+
+    .wealth-btn-secondary {
+        background: white;
+        color: #7F8C8D;
+        border: 2px solid #EDEDED;
+    }
+
+    .wealth-btn-secondary:hover {
+        background: #F5F5F5;
+        border-color: #DDD;
+    }
+
+    /* Checkbox and Radio Styles */
+    .wealth-form input[type="checkbox"],
+    .wealth-form input[type="radio"] {
+        width: auto;
+        margin-right: 0.8rem;
+        transform: scale(1.2);
+    }
+
+    /* Animations */
+    @keyframes wealth-pulse {
+        0% { opacity: 0.8; }
+        100% { opacity: 1; }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .wealth-form-container {
+            margin: 1rem;
+            border-radius: 8px;
+        }
+        
+        .wealth-form-header {
+            padding: 1.5rem;
+        }
+        
+        .wealth-form {
+            padding: 1.5rem;
+        }
+        
+        .wealth-actions {
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .wealth-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add prosperity glow to valid fields
+        const inputs = document.querySelectorAll('.wealth-form input, .wealth-form select, .wealth-form textarea');
+        
+        inputs.forEach(input => {
+            // Focus effects
+            input.addEventListener('focus', function() {
+                this.style.borderColor = '#F39C12';
+                this.style.boxShadow = '0 0 0 4px rgba(243, 156, 18, 0.2)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.style.boxShadow = 'none';
+            });
+            
+            // Add gold glow when valid
+            input.addEventListener('input', function() {
+                if (this.checkValidity()) {
+                    this.style.borderColor = '#F1C40F';
+                }
+            });
+        });
+        
+        // Save button loading state
+        const saveBtn = document.querySelector('.wealth-btn-primary');
+        if (saveBtn) {
+            saveBtn.addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Growing Wealth...';
+            });
+        }
+        
+        // Tooltip positioning for mobile
+        const tooltips = document.querySelectorAll('.wealth-tooltip');
+        tooltips.forEach(tooltip => {
+            tooltip.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    const tooltipText = this.querySelector('.wealth-tooltip-text');
+                    tooltipText.style.visibility = tooltipText.style.visibility === 'visible' ? 'hidden' : 'visible';
+                    tooltipText.style.opacity = tooltipText.style.opacity === '1' ? '0' : '1';
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
