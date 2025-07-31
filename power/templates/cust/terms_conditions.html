@@ -1,15 +1,142 @@
 {% extends "base.html" %}
 
-{% block title %}Terms & Conditions{% endblock %}
+{% block title %}Terms & Conditions | Kakuskos Consulting{% endblock %}
 
 {% block content %}
-<div class="legal">
-    <h1>Terms & Conditions</h1>
-    
-    <h2>Service Agreement</h2>
-    <p>By using our services, you agree to provide accurate information.</p>
-    
-    <h2>Cancellations</h2>
-    <p>Installations may be cancelled with 48 hours notice for full refund.</p>
+<div class="legal terms-conditions">
+  <h1>Terms & Conditions</h1>
+  <p class="last-updated">Last Updated: {% now "F j, Y" %}</p>
+
+  <section class="policy-section">
+    <h2>1. Introduction</h2>
+    <p>
+      Welcome to Kakuskos Consulting. These Terms and Conditions govern the use of our website, services, and all interactions with our team. By accessing or using our website or engaging with any of our services, you agree to be bound by these terms. If you do not agree with any part of these terms, you should not proceed with using our website or services.
+    </p>
+  </section>
+
+  <section class="policy-section">
+    <h2>2. Who We Are</h2>
+    <p>
+      Kakuskos Consulting is a Kenyan-based energy and sustainability consulting firm dedicated to helping individuals, businesses, and organizations transition to smarter, cleaner, and more efficient energy systems. Our services range from solar assessments and installation guidance to ESG (Environmental, Social, and Governance) advisory, energy efficiency planning, and long-term sustainability strategy support.
+    </p>
+  </section>
+
+  <section class="policy-section">
+    <h2>3. Service Engagement</h2>
+    <p>
+      Clients can engage with us through our website, email, telephone, or in person. Upon submitting a service request, we will assess your requirements and provide a personalized consultation. By submitting your request, you agree to provide accurate, truthful, and complete information to facilitate the delivery of appropriate services.
+    </p>
+    <ul>
+      <li>We reserve the right to decline or delay a service based on availability or feasibility.</li>
+      <li>Any intentional misrepresentation or abuse of our platform may lead to immediate termination of the engagement.</li>
+    </ul>
+  </section>
+
+  <section class="policy-section">
+    <h2>4. Pricing & Payments</h2>
+    <p>
+      All pricing details are shared transparently either before or during consultation. Quotes may vary depending on the size of the project, complexity, travel requirements, or additional services requested.
+    </p>
+    <p>
+      Kakuskos accepts multiple forms of payment including M-Pesa, bank transfer, and card payments (where applicable). Full payment or a deposit may be required before service execution.
+    </p>
+    <ul>
+      <li>Invoices are due within the terms agreed upon at the time of service initiation.</li>
+      <li>Failure to make payment may result in the suspension of services or legal action.</li>
+    </ul>
+  </section>
+
+  <section class="policy-section">
+    <h2>5. Cancellation & Refunds</h2>
+    <p>
+      We understand that plans may change. Our cancellation policy is designed to be fair to both the client and our consultants who dedicate time and resources to preparing and delivering services.
+    </p>
+    <ul>
+      <li>Cancellations made more than 48 hours before a scheduled service will receive a full refund.</li>
+      <li>Cancellations within 24–48 hours may incur administrative fees.</li>
+      <li>No refunds are issued for cancellations made less than 24 hours before service or for services already rendered.</li>
+      <li>Special equipment, third-party purchases, or custom-built components are non-refundable once ordered.</li>
+    </ul>
+  </section>
+
+  <section class="policy-section">
+    <h2>6. Project Delivery & Timeline</h2>
+    <p>
+      Project timelines will be shared at the beginning of the engagement and may vary based on the complexity of work, weather conditions, logistical factors, or regulatory requirements. We will make every effort to adhere to the agreed timeline but reserve the right to reschedule in case of delays beyond our control.
+    </p>
+  </section>
+
+  <section class="policy-section">
+    <h2>7. Warranties & Guarantees</h2>
+    <p>
+      While we strive to provide reliable advice, guidance, and service, all hardware-related warranties (e.g., solar panels, batteries, inverters) are typically covered by the respective manufacturers. We do not offer independent warranties for third-party equipment unless stated otherwise in writing.
+    </p>
+    <p>
+      Our consulting services are provided in good faith and based on the best-available data, but we cannot guarantee energy savings or financial returns.
+    </p>
+  </section>
+
+  <section class="policy-section">
+    <h2>8. Client Responsibilities</h2>
+    <ul>
+      <li>Clients must provide access to the site, buildings, or equipment as needed for inspection or installation.</li>
+      <li>Clients must ensure that their usage of our recommendations complies with all local laws and utility regulations.</li>
+      <li>Clients are responsible for securing necessary approvals from landlords, counties, or building managers.</li>
+    </ul>
+  </section>
+
+  <section class="policy-section">
+    <h2>9. Use of Website & Content</h2>
+    <p>
+      All content on our website, including articles, calculators, graphics, and downloadable guides, is owned by Kakuskos Consulting or its licensors. You may not reproduce, republish, or redistribute any material for commercial use without our prior written consent.
+    </p>
+  </section>
+
+  <section class="policy-section">
+    <h2>10. Data Privacy</h2>
+    <p>
+      We respect your privacy. Please refer to our <a href="{% url 'privacy_policy' %}">Privacy Policy</a> for detailed information on how your data is collected, stored, and used.
+    </p>
+  </section>
+
+  <section class="policy-section">
+    <h2>11. Limitation of Liability</h2>
+    <p>
+      Kakuskos Consulting is not liable for indirect, incidental, or consequential damages arising out of the use or inability to use our services, even if we have been advised of the possibility of such damages. Our liability is limited to the total amount paid by the client for the specific service.
+    </p>
+  </section>
+
+  <section class="policy-section">
+    <h2>12. Expansion & Geographic Scope</h2>
+    <p>
+      While our services are currently available across all 47 counties in Kenya, we are actively exploring partnerships and infrastructure to expand to Uganda, Tanzania, and Rwanda. Service delivery in these regions will be subject to local laws and logistical arrangements.
+    </p>
+  </section>
+
+  <section class="policy-section">
+    <h2>13. Dispute Resolution</h2>
+    <p>
+      If any disputes arise, both parties agree to first attempt resolution through negotiation. If unresolved, disputes shall be settled in accordance with the laws of the Republic of Kenya.
+    </p>
+  </section>
+
+  <section class="policy-section">
+    <h2>14. Changes to These Terms</h2>
+    <p>
+      We may revise these Terms from time to time. Any updates will be posted on this page and will take effect immediately upon posting. Continued use of our services after changes implies your acceptance of the revised terms.
+    </p>
+  </section>
+
+  <section class="policy-section">
+    <h2>15. Contact Us</h2>
+    <p>
+      For questions or concerns about these Terms & Conditions, please contact us:
+    </p>
+    <ul>
+      <li>Email: <a href="mailto:info@kakuskos.co.ke">info@kakuskos.co.ke</a></li>
+      <li>Phone: +254 700 123 456</li>
+      <li>Physical Address: Ground Floor, Solar House, Nairobi CBD, Kenya</li>
+    </ul>
+  </section>
 </div>
 {% endblock %}

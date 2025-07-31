@@ -1,16 +1,101 @@
 {% extends "base.html" %}
 
-{% block title %}Privacy Policy{% endblock %}
+{% block title %}Privacy Policy | Kakuskos Consulting{% endblock %}
 
 {% block content %}
-<div class="legal">
-    <h1>Privacy Policy</h1>
-    <p>Last Updated: {% now "F j, Y" %}</p>
-    
-    <h2>Information Collection</h2>
-    <p>We collect basic contact information when you request our services.</p>
-    
-    <h2>Data Usage</h2>
-    <p>Your information is used solely for providing and improving our services.</p>
+<div class="legal privacy-policy">
+  <h1>Privacy Policy</h1>
+  <p class="last-updated">Last Updated: {% now "F j, Y" %}</p>
+
+  <section class="policy-section">
+    <h2>1. Introduction</h2>
+    <p>
+      At Kakuskos Consulting, we value your privacy. This Privacy Policy outlines how we collect, use, disclose, and protect your personal information when you interact with our website and services. By using our site or submitting your information, you agree to the practices described here.
+    </p>
+  </section>
+
+  <section class="policy-section">
+    <h2>2. Information We Collect</h2>
+    <p>We may collect the following types of information:</p>
+    <ul>
+      <li><strong>Personal Information:</strong> Your name, email address, phone number, and physical address when submitting a service request form.</li>
+      <li><strong>Service Preferences:</strong> Data on which services you’re interested in.</li>
+      <li><strong>Communication Data:</strong> Any correspondence you send to us, including emails or website contact forms.</li>
+      <li><strong>Technical Data:</strong> Browser type, IP address, operating system, and site usage statistics collected via cookies or analytics tools.</li>
+    </ul>
+  </section>
+
+  <section class="policy-section">
+    <h2>3. How We Use Your Data</h2>
+    <p>We use the information we collect to:</p>
+    <ul>
+      <li>Provide, personalize, and improve our services</li>
+      <li>Respond to your inquiries or service requests</li>
+      <li>Send administrative emails and updates</li>
+      <li>Conduct internal analytics to better understand customer needs</li>
+      <li>Ensure legal compliance and safeguard user interests</li>
+    </ul>
+  </section>
+
+  <section class="policy-section">
+    <h2>4. Cookies and Tracking Technologies</h2>
+    <p>
+      Our website may use cookies and similar technologies to enhance user experience, measure site performance, and understand how users interact with our site. You may choose to disable cookies through your browser settings, though this may affect functionality.
+    </p>
+  </section>
+
+  <section class="policy-section">
+    <h2>5. Information Sharing</h2>
+    <p>We do not sell or rent your personal data. We may share your information with:</p>
+    <ul>
+      <li>Trusted service providers who help us operate our website and provide our services (e.g., hosting, email delivery)</li>
+      <li>Law enforcement or government authorities if required by law or in response to legal requests</li>
+    </ul>
+  </section>
+
+  <section class="policy-section">
+    <h2>6. Data Security</h2>
+    <p>
+      We implement a variety of technical and organizational measures to protect your data from unauthorized access, disclosure, or misuse. However, no online system is 100% secure, so we encourage you to use strong passwords and avoid sharing sensitive data unnecessarily.
+    </p>
+  </section>
+
+  <section class="policy-section">
+    <h2>7. Your Rights</h2>
+    <p>You have the right to:</p>
+    <ul>
+      <li>Request access to the data we hold about you</li>
+      <li>Correct any inaccuracies in your personal information</li>
+      <li>Request deletion of your data, subject to legal and operational requirements</li>
+      <li>Withdraw consent for marketing communications</li>
+    </ul>
+    <p>
+      To exercise these rights, please contact us using the details below.
+    </p>
+  </section>
+
+  <section class="policy-section">
+    <h2>8. International Users</h2>
+    <p>
+      Our services are intended for users in Kenya and the East African region. If you are accessing our services from outside these regions, your data may be transferred and stored in Kenya where our servers are located.
+    </p>
+  </section>
+
+  <section class="policy-section">
+    <h2>9. Policy Updates</h2>
+    <p>
+      We may update this Privacy Policy from time to time to reflect changes in technology, legislation, or our data practices. We encourage you to check this page periodically. The "Last Updated" date above reflects the most recent revision.
+    </p>
+  </section>
+
+  <section class="policy-section">
+    <h2>10. Contact Us</h2>
+    <p>
+      If you have questions about this Privacy Policy or how we handle your data, please contact:
+    </p>
+    <p>Email: <a href="mailto:info@kakuskos.co.ke">info@kakuskos.co.ke</a><br>
+       Phone: +254 700 123 456</p>
+    <p>Thank you for trusting Kakuskos Consulting.</p>
+  </section>
 </div>
 {% endblock %}

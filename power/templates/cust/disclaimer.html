@@ -1,15 +1,82 @@
 {% extends "base.html" %}
 
-{% block title %}Legal Disclaimer{% endblock %}
+{% block title %}Legal Disclaimer | Kakuskos Consulting{% endblock %}
 
 {% block content %}
-<div class="legal">
-    <h1>Legal Disclaimer</h1>
-    
-    <h2>No Guarantees</h2>
-    <p>Energy savings may vary based on individual usage patterns.</p>
-    
-    <h2>Professional Advice</h2>
-    <p>Consult with a qualified electrician for specific technical requirements.</p>
+<div class="legal legal-disclaimer">
+  <h1>Legal Disclaimer</h1>
+  <p class="last-updated">Last Updated: {% now "F j, Y" %}</p>
+
+  <section class="disclaimer-section">
+    <h2>1. No Guarantees or Warranties</h2>
+    <p>
+      Kakuskos Consulting provides services and information in good faith and based on the best-available data. However, we make no express or implied guarantees regarding the accuracy, completeness, or results of our consulting services, energy-saving estimates, or system performance projections.
+    </p>
+    <p>
+      Energy savings, cost reductions, or environmental impact may vary widely depending on your location, system usage, maintenance practices, utility provider, and other variables beyond our control.
+    </p>
+  </section>
+
+  <section class="disclaimer-section">
+    <h2>2. Professional and Technical Advice</h2>
+    <p>
+      All content on this site, including articles, guides, tools, and downloadable documents, is provided for general informational purposes only. It should not be considered professional, legal, engineering, or electrical advice.
+    </p>
+    <p>
+      You are encouraged to consult with a licensed electrician, structural engineer, or regulatory authority before making decisions that involve electrical installations, load assessments, solar integration, or construction modifications.
+    </p>
+  </section>
+
+  <section class="disclaimer-section">
+    <h2>3. Limitation of Liability</h2>
+    <p>
+      Kakuskos Consulting shall not be held liable for any loss, injury, claim, liability, or damage of any kind resulting from your use of our website, services, or reliance on provided information. This includes (but is not limited to) direct, indirect, incidental, or consequential damages.
+    </p>
+    <p>
+      Our liability, if any, is limited strictly to the value of the fees paid for the specific service rendered.
+    </p>
+  </section>
+
+  <section class="disclaimer-section">
+    <h2>4. Third-Party Products and Vendors</h2>
+    <p>
+      Any references to third-party products, manufacturers, or services do not constitute an endorsement. Kakuskos Consulting is not responsible for the performance, warranties, or safety of third-party hardware or installations not directly managed by our team.
+    </p>
+    <p>
+      You are advised to review the terms and warranty coverage of any third-party equipment separately.
+    </p>
+  </section>
+
+  <section class="disclaimer-section">
+    <h2>5. Service Scope and Availability</h2>
+    <p>
+      While we currently serve clients across Kenya, access to certain services may vary depending on your location, infrastructure, and applicable regional regulations. Availability is subject to consultant scheduling, logistics, and third-party factors.
+    </p>
+  </section>
+
+  <section class="disclaimer-section">
+    <h2>6. Jurisdiction and Legal Compliance</h2>
+    <p>
+      All users of this website and clients of Kakuskos Consulting agree to abide by the applicable laws of the Republic of Kenya. Any disputes shall be governed by the jurisdiction of Kenyan courts.
+    </p>
+  </section>
+
+  <section class="disclaimer-section">
+    <h2>7. Changes to This Disclaimer</h2>
+    <p>
+      We reserve the right to modify this disclaimer at any time. Updates will be posted on this page with the revision date. Continued use of our website or services following such changes constitutes your acceptance of the updated terms.
+    </p>
+  </section>
+
+  <section class="disclaimer-section">
+    <h2>8. Contact</h2>
+    <p>
+      If you have any questions or concerns about this disclaimer, please contact us:
+    </p>
+    <ul>
+      <li>Email: <a href="mailto:info@kakuskos.co.ke">info@kakuskos.co.ke</a></li>
+      <li>Phone: +254 700 123 456</li>
+    </ul>
+  </section>
 </div>
 {% endblock %}
